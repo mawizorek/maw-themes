@@ -1,0 +1,30 @@
+{
+  "_README": "COPY THIS FILE to start a new theme. Steps: (1) copy _template.json -> <slug>.json. (2) fill name/slug/mode/description + all 17 tokens in OKLCH. (3) register one line in _index.json under a group. (4) run `node build-themes.mjs` to regenerate themes.css. That's it — the preview menu auto-populates from _index.json. Do NOT ship a theme with placeholder token values; every key must be a real OKLCH color. Delete this _README key in your copy.",
+  "schemaVersion": 1,
+  "name": "Template (copy me)",
+  "slug": "_template",
+  "status": "stub",
+  "mode": "light",
+  "intendedUse": "",
+  "description": "Starter theme. Every token below is a role hint, not a final color — replace all 17. status:stub keeps it out of the generated CSS and the menu until you flip it to locked.",
+  "fmpMapping": { "fmTheme": "pending", "styles": {} },
+  "tokens": {
+    "bg": "oklch(0.97 0.005 260)         /* app canvas / part-body base */",
+    "surface-1": "oklch(0.99 0.003 260)  /* raised chrome: bars, part-header, nav */",
+    "surface-2": "oklch(0.945 0.008 260) /* panels, cards, zebra rows */",
+    "surface-3": "oklch(0.90 0.012 260)  /* highest elevation: footers, popovers, menus */",
+    "border": "oklch(0.86 0.02 260)      /* dividers, field borders, grid lines */",
+    "field": "oklch(0.99 0.003 260)       /* input / editable field fill */",
+    "text": "oklch(0.28 0.02 260)          /* primary text, field text, titles */",
+    "text-soft": "oklch(0.46 0.02 260)     /* labels, secondary text */",
+    "text-faint": "oklch(0.62 0.015 260)   /* tertiary, disabled, placeholder */",
+    "accent": "oklch(0.55 0.15 260)        /* primary action / brand */",
+    "accent-2": "oklch(0.60 0.12 220)      /* secondary accent, highlighted titles, focus ring */",
+    "accent-soft": "oklch(0.92 0.05 260)   /* tinted accent surface (solid, not alpha) */",
+    "on-accent": "oklch(0.99 0.01 260)     /* text/icon sitting on an accent fill */",
+    "good": "oklch(0.55 0.15 150)          /* success / positive */",
+    "warn": "oklch(0.62 0.14 75)           /* warning */",
+    "bad": "oklch(0.55 0.20 25)            /* error / destructive */",
+    "info": "oklch(0.52 0.14 240)          /* informational */"
+  }
+}
