@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "contract": "global",
+  "note": "GLOBAL theme contract. Shared by ClickUp HTML apps (Pages-hosted, resolve live) AND FileMaker layout renders (local design mockups, tokens inlined at render time). One vocabulary, one source of truth. Change a theme file once and every consumer that references its slug reskins.",
+  "defaultTheme": "default-theme",
+  "ultimateFallback": "default-theme",
+  "tokenKeys": [
+    "bg", "surface-1", "surface-2", "surface-3", "border", "field",
+    "text", "text-soft", "text-faint",
+    "accent", "accent-2", "accent-soft", "on-accent",
+    "good", "warn", "bad", "info"
+  ],
+  "tokenRoles": {
+    "bg": "app canvas / part-body base",
+    "surface-1": "raised chrome: top/bottom bars, part-header, nav",
+    "surface-2": "panels, cards, zebra rows",
+    "surface-3": "highest elevation: footers, popovers, menus",
+    "border": "dividers, field borders, grid lines",
+    "field": "input / editable field fill",
+    "text": "primary text, field text, titles",
+    "text-soft": "labels, secondary text",
+    "text-faint": "tertiary, disabled, placeholder",
+    "accent": "primary action / brand",
+    "accent-2": "secondary accent, highlighted titles, focus ring",
+    "accent-soft": "tinted accent surface (solid, not alpha)",
+    "on-accent": "text/icon sitting on an accent fill",
+    "good": "success / positive state",
+    "warn": "warning state",
+    "bad": "error / destructive state",
+    "info": "informational state"
+  },
+  "accentBoardRule": "⚠️ THE ACCENT COLUMN IS A SINGULAR-USE VALUE BEING USED PLURALLY, AND THAT IS A MEASURED FAILURE MODE (2026-08-01). `accent` is the actionable colour inside ONE theme, where nothing competes with it — so eleven of them can be individually correct and collectively unreadable. On 08-01 Ferrari, Red Bull, Audi and Haas sat within 1.1 hue degrees and 0.011 lightness of each other, two byte-identical, and it was invisible until an app rendered all eleven at once. The F1 block now holds ONE HUE FAMILY PER TEAM. If you add or edit a row, check its accent against every other row in oklch, not by eye.",
+  "fmpRoleMap": {
+    "note": "How the retired FileMaker cv-* layout roles map onto the global contract, for native FMP theme building and render aliasing (resolve.js aliasMap).",
+    "cv-bg": "bg",
+    "cv-part-header": "surface-1",
+    "cv-part-body": "bg",
+    "cv-part-footer": "surface-3",
+    "cv-field-fill": "field",
+    "cv-field-border": "border",
+    "cv-field-text": "text",
+    "cv-label": "text-soft",
+    "cv-accent": "accent",
+    "cv-title": "text (use accent-2 for highlighted titles)"
+  },
+  "groups": [
+    {
+      "id": "default",
+      "label": "Default",
+      "themes": [
+        { "slug": "default-theme", "name": "Default Theme", "file": "default-theme.json", "status": "locked", "mode": "mid", "intendedUse": "unskinned default — new apps point here until a theme is chosen", "fmp": "pending" }
+      ]
+    },
+    {
+      "id": "utility",
+      "label": "Utility",
+      "themes": [
+        { "slug": "maw-dark-utility", "name": "MAW Dark Utility", "file": "maw-dark-utility.json", "status": "locked", "mode": "dark", "intendedUse": "utility/admin", "fmp": "MAW Dark" },
+        { "slug": "paddock", "name": "Paddock Violet", "file": "paddock.json", "status": "locked", "mode": "dark", "intendedUse": "data-dense motorsport chrome — the f1-racetracks app identity (hue 268 violet ground, F1 mark red as the action accent). An APP palette, not a constructor, which is why it is not in the F1 group.", "fmp": "pending" }
+      ]
+    },
+    {
+      "id": "neutral",
+      "label": "Neutral & Natural",
+      "themes": [
+        { "slug": "paper-mono", "name": "Paper Mono", "file": "paper-mono.json", "status": "locked", "mode": "light", "intendedUse": "clean / neutral / print-like", "fmp": "pending" },
+        { "slug": "papyrus", "name": "Papyrus", "file": "papyrus.json", "status": "locked", "mode": "light", "intendedUse": "warm / editorial / natural", "fmp": "pending" },
+        { "slug": "americana", "name": "Americana", "file": "americana.json", "status": "locked", "mode": "light", "intendedUse": "patriotic / civic / editorial", "fmp": "pending" }
+      ]
+    },
+    {
+      "id": "f1",
+      "label": "F1 Constructors 2026",
+      "themes": [
+        { "slug": "mclaren", "name": "McLaren", "file": "f1/mclaren.json", "status": "locked", "mode": "dark", "intendedUse": "data-dense / ledger — owns PAPAYA on the board", "fmp": "pending" },
+        { "slug": "ferrari", "name": "Ferrari", "file": "f1/ferrari.json", "status": "locked", "mode": "dark", "intendedUse": "data-dense / ledger — owns RED on the board, the oldest claim in the sport", "fmp": "pending" },
+        { "slug": "mercedes", "name": "Mercedes", "file": "f1/mercedes.json", "status": "locked", "mode": "dark", "intendedUse": "data-dense / ledger — owns PETRONAS TEAL", "fmp": "pending" },
+        { "slug": "red-bull", "name": "Red Bull Racing", "file": "f1/red-bull.json", "status": "locked", "mode": "dark", "intendedUse": "data-dense / ledger — owns YELLOW (the sun on the can). Moved off red 2026-08-01; the red is now accent-2.", "fmp": "pending" },
+        { "slug": "alpine", "name": "Alpine", "file": "f1/alpine.json", "status": "locked", "mode": "dark", "intendedUse": "data-dense / ledger — owns PINK. accent/accent-2 swapped 2026-08-01 so the row states the identity J15 already ruled, instead of every consumer keeping a local swap.", "fmp": "pending" },
+        { "slug": "aston-martin", "name": "Aston Martin", "file": "f1/aston-martin.json", "status": "locked", "mode": "dark", "intendedUse": "data-dense / ledger — owns BRITISH RACING GREEN. Pushed off Mercedes' teal 2026-08-01 (they were 5.6 hue degrees apart).", "fmp": "pending" },
+        { "slug": "audi", "name": "Audi", "file": "f1/audi.json", "status": "locked", "mode": "dark", "intendedUse": "data-dense / ledger — owns TITANIUM, the third colour of the 2026 livery and the colour of the rings. Moved off red 2026-08-01; the Audi red is now accent-2.", "fmp": "pending" },
+        { "slug": "cadillac", "name": "Cadillac", "file": "f1/cadillac.json", "status": "locked", "mode": "dark", "intendedUse": "data-dense / ledger — owns GOLD", "fmp": "pending" },
+        { "slug": "haas", "name": "Haas", "file": "f1/haas.json", "status": "locked", "mode": "light", "intendedUse": "data-dense / ledger — owns CARMINE, the board's second and last red, deliberately deeper and cooler than Ferrari's scarlet.", "fmp": "pending" },
+        { "slug": "racing-bulls", "name": "Racing Bulls", "file": "f1/racing-bulls.json", "status": "locked", "mode": "light", "intendedUse": "data-dense / ledger — owns INDIGO. ⚠️ 16 hue degrees from Williams' blue, the tightest remaining pair; pre-existing, left alone on purpose, and the next thing to fix if the matrix reads muddy.", "fmp": "pending" },
+        { "slug": "williams", "name": "Williams", "file": "f1/williams.json", "status": "locked", "mode": "light", "intendedUse": "data-dense / ledger — owns BLUE", "fmp": "pending" }
+      ]
+    }
+  ]
+}
