@@ -1,22 +1,37 @@
 # Migration Status
 
 **Source:** `mawizorek/ClickUp_apps` → `shared/themes/` · **Target:** this repo
-**Opened:** 2026-08-03 · **Last updated:** 2026-08-04 · **Branch:** `scaffold-v1`
+**Opened:** 2026-08-03 · **Last updated:** 2026-08-04
 
 Nothing in `ClickUp_apps` has been deleted or modified. This migration is
 **copy → verify → tombstone**, in that order. `shared/themes/` stays authoritative until this repo
 can prove it renders.
 
-Decisions live in the [maw-themes (repo) Decision Log](https://app.clickup.com/) in ClickUp, never
-in this repo — a decision log needs a clickable checkbox, so a repo file cannot be one.
+Decisions live in the **maw-themes (repo) Decision Log** in ClickUp, never in this repo — a
+decision log needs a clickable checkbox, so a repo file cannot be one.
+
+---
+
+## ▶️ NEXT ACTION: run `port-remaining.sh`
+
+Everything still outstanding is blocked on ONE thing, and it is not a decision. It is a
+**transfer path**. Run it from anywhere (needs `git` + `python3`):
+
+```
+bash port-remaining.sh
+```
+
+It clones both repos, copies the last eight files, proves each one byte-identical with
+`git hash-object` on both sides, repoints the Studio's asset tags, runs the contrast gate, and
+pushes a branch. **It refuses to push if a single hash mismatches.** Delete the script once it has
+succeeded — it is a one-time tool, not infrastructure.
 
 ---
 
 ## ✅ Landed, byte-verified
 
-Every file below was written from a blob-API read and **came back from GitHub with a blob SHA
-identical to its source file's SHA** — a content-addressed proof of a byte-perfect copy, not an
-eyeball check.
+Every file below came back from GitHub with a blob SHA **identical to its source file's SHA** — a
+content-addressed proof of a byte-perfect copy, not an eyeball check.
 
 | Landed at | Bytes | SHA |
 |---|---|---|
@@ -30,69 +45,81 @@ eyeball check.
 | `registry/_template.json` | 2,226 | `03842fc` ✅ |
 | `vocabulary/OBJECT-COVERAGE.md` | 10,409 | `30651fe` ✅ |
 | `docs/THEME-SYSTEM.md` | 7,591 | `f99f5fc` ✅ |
-| `engine/build-themes.mjs` | 3,652 | `c601bf9` ⛔ ported, DO NOT RUN — see `engine/README.md` |
+| `engine/build-themes.mjs` | 3,652 | `c601bf9` ⛔ ported for provenance, DO NOT RUN — see `engine/README.md` |
 
-## ✅ Authored new (2026-08-04) — the contrast gate
+## ✅ The contrast gate (authored 2026-08-04, PR #1)
 
 | File | What |
 |---|---|
 | `engine/contrastcheck.py` | WCAG 2.x contrast gate. Maths in the hook. |
 | `engine/contrast-budget.tsv` | Thresholds + waivers as DATA, with a note column so every waiver shows in a diff. |
-| `engine/contrast-baseline.md` | The 2026-08-04 run, stamped. **17 unwaived · 139 waived · 631 comparisons.** |
+| `engine/contrast-baseline.md` | The stamped 2026-08-04 run. **631 comparisons · 139 waived · 17 unwaived.** |
 
 Shape lifted from the size gate already proven in `maw-agents/uritp-docs`, deliberately rather than
-invented. **It has been RUN, not just written** — against a local copy whose git blob SHA was
-verified identical to `colors.tsv` before the run, so its output describes the real table.
+invented. **It has been RUN, not just written**, against a table whose git blob SHA was verified
+identical to `colors.tsv` first.
 
-⚠️ **It exits 1 today.** Run it non-blocking in CI until the 17 are cleared or waived with reasons,
-then flip it to blocking. A gate that has always been red is a gate nobody reads.
+⚠️ **It exits 1 today.** Run non-blocking in CI until the 17 clear, then flip to blocking. *A gate
+that has always been red is a gate nobody reads.*
 
 ---
 
-## ⛔ NOT landed — and the reason is a TRANSFER PATH, not a decision
+## ⏳ Outstanding — 8 files, all on the script
 
-These five need a byte-safe copy this session could not provide. **Reading them is not the problem
-for the bottom three; reproducing them exactly is.** Transcribing a file through an agent's output
-is a fidelity gamble, and the repo's own hard rule — *never rewrite a file from a read you cannot
-prove is whole* — applies to the write side too.
+| Source | Bytes | Destination |
+|---|---|---|
+| `resolve.js` | 18,658 | `engine/resolve.js` |
+| `_objects.json` | 23,415 | `vocabulary/_objects.json` |
+| `preview.html` | 9,848 | `studio/index.html` |
+| `preview.css` | 26,322 | `studio/studio.css` |
+| `preview.objects.css` | 17,231 | `studio/studio.objects.css` |
+| `preview.core.js` | 16,260 | `studio/studio.core.js` |
+| `preview.data.js` | 27,419 | `studio/studio.data.js` ⚠️ see reversal below |
+| `FILEMAKER-CAPABILITIES.md` | 9,981 | `docs/FILEMAKER-CAPABILITIES.md` |
 
-| File | Bytes | Destination | Blocker |
-|---|---|---|---|
-| `_objects.json` | 23,415 | `vocabulary/_objects.json` | over the ~22KB read ceiling (base64 inflates 4/3 against a ~30KB cap). **The 42-object registry — the vocabulary half of this repo's whole purpose.** |
-| `preview.data.js` | 27,419 | — | over the ceiling, and **should not be ported at all**: it is a 27KB hand-synced mirror of the four grids that the generator deletes. |
-| `preview.css` | 26,322 | `studio/studio.css` | over the ceiling; needs the modular split on arrival regardless. |
-| `resolve.js` | 18,658 | `engine/resolve.js` | **readable, and attempted 2026-08-04. Abandoned at 3,270 of 18,658 bytes and discarded rather than half-committed.** This is the live engine every consumer calls; a subtle transcription slip is a real bug, not a cosmetic diff. |
-| `preview.objects.css` · `preview.core.js` · `preview.html` · `FILEMAKER-CAPABILITIES.md` | 17,231 · 16,260 · 9,848 · 9,981 | `studio/` · `docs/` | not attempted this pass. |
+⭐ **Why a script and not an agent — the finding worth keeping.** Transcribing a file through an
+agent's output is **not a byte-safe transfer path.** It held for `colors.tsv` (5.7KB, SHA-verified)
+and for the eleven scaffold files. `resolve.js` was attempted on 2026-08-04, abandoned at **3,270 of
+18,658 bytes**, and discarded rather than half-committed — it is the live engine every consumer
+calls. The repo's own rule (*never rewrite a file from a read you cannot prove is whole*) applies to
+the **write** side too. `git checkout` + `cp` cannot mis-transcribe.
 
-**The path that works: a local `git clone` of both repos + `cp` + push, or the GitHub web UI upload.**
-Both are byte-safe. ⚠️ **Do NOT route them through the raw branch URL** — it is cache-unreliable and
-flattens markup, and `_objects.json` + `preview.css` are exactly the files that would corrupt
-silently.
+⚠️ **Do NOT route these through the raw branch URL** — it is cache-unreliable and flattens markup,
+and `_objects.json` + `preview.css` are exactly the files that would corrupt silently.
+
+### ⚠️ REVERSED: `preview.data.js` IS ported after all
+
+This file previously called it do-not-port: a ~27KB hand-synced mirror of the four grids that the
+generator deletes. That reasoning is still correct **and the call was still wrong**, because
+`THEME-SYSTEM.md` makes it the Studio's first-paint snapshot — **without it the Studio cannot paint,
+and a Studio that cannot paint proves nothing.** The Studio is the acceptance test; shipping it
+doomed is worse than shipping it with a file marked for deletion. It lands as
+`studio/studio.data.js` with `studio/PORTED.md` recording its expiry. **Delete it the moment the
+generator emits `dist/themes.json`.**
 
 ## 🚫 Deliberately NOT ported
 
-- **`themes.css`** (10,725 B) — GENERATED. Regenerated into `dist/`, never copied. ⚠️ It is also
-  **stale since 2026-07-16 and nothing noticed**, which is the argument for running the generator in
-  CI: a generated artifact regenerated by hand is a hand-maintained artifact.
-- **`decision-log.md`** (21,295 B) — a decision log is a ClickUp doc page, never a repo file
-  (LOCKED 2026-07-26). Its content becomes DL entries; the repo keeps a pointer. ⚠️ Its own header
-  evangelises the opposite convention, so it is an active trap, not merely misfiled.
-- **`_template.json`** — already marked `Status: superseded` in that log. Under hex-canonical a new
-  theme is a ROW.
-- **`README.md`** (8,672 B) — superseded, and carries the object-count rot below.
+- **`themes.css`** (10,725 B) — GENERATED. Regenerated into `dist/`, never copied. ⚠️ Also **stale
+  since 2026-07-16 and nothing noticed** — the argument for running the generator in CI. *A
+  generated artifact regenerated by hand is a hand-maintained artifact.*
+- **`decision-log.md`** (21,295 B) — a decision log is a ClickUp doc page, never a repo file (LOCKED
+  2026-07-26). Content becomes DL entries; the repo keeps a pointer. ⚠️ Its own header evangelises
+  the opposite convention, so it is an active trap, not merely misfiled.
+- **`_template.json`** — already `Status: superseded` in that log. Under hex-canonical a theme is a ROW.
+- **`README.md`** (8,672 B) — superseded, and carries the D3 object-count rot.
 - **`feelings/`** — retired vector, dead since the 4-vector rework.
 
 ---
 
 ## 🎨 The Studio ships INSIDE this repo (ruled 2026-08-03, Michael)
 
-`studio/` is a first-class directory here. `OBJECT-COVERAGE.md` defines the Studio as the theme
-acceptance test — *a theme is only real if it can style all 42 canonical objects.* A proof surface
-living in a different repo from the data it proves goes stale the instant either side moves, and
-Pages will happily serve a stale studio against a fresh table with no error anywhere.
+`OBJECT-COVERAGE.md` defines the Studio as the theme acceptance test — *a theme is only real if it
+can style all 42 canonical objects.* A proof surface living in a different repo from the data it
+proves goes stale the instant either side moves, and Pages will serve a stale studio against a fresh
+table with no error anywhere.
 
-**It gets the modular split on arrival, not a straight copy.** Two of its five files are over the
-read ceiling today.
+⚠️ **Byte-identical is not the same as working.** After the script runs, someone must OPEN
+`studio/index.html` and confirm 42/42. Until that has been seen, the Studio is ported, not proven.
 
 ---
 
@@ -100,86 +127,75 @@ read ceiling today.
 
 ### D1 — `carbon` and `eos`: real, but SMALLER than first recorded
 
-Both are rows in all four vector grids and both are referenced by `status: "locked"` entries in
-`registry/_themes.json` (`sharp-carbon` → `carbon`; `eos` → `eos`). Neither is registered in
-`registry/_index.json` and neither has a per-theme JSON.
-
-⚠️ **DOWNGRADED 2026-08-03:** `resolve.js` reads **only the TSVs**, never a per-colour JSON — so
-both themes **work at runtime today.** D1 is a stale *static* artifact (`themes.css`, the Studio
-menu, the generator), not a broken theme. Corollary: the per-theme JSON files are PROJECTIONS.
+Both are rows in all four grids and both are referenced by `status: "locked"` entries in
+`registry/_themes.json`. Neither is in `registry/_index.json`; neither has a per-theme JSON.
+⚠️ **DOWNGRADED:** `resolve.js` reads **only the TSVs**, never a per-colour JSON — so both **work at
+runtime today.** D1 is a stale *static* artifact (`themes.css`, the Studio menu, the generator), not
+a broken theme. Corollary: the per-theme JSONs are PROJECTIONS.
 
 ### D2 — one stale list, not a three-way disagreement
 
-`colors.tsv` is **36 columns** = 3 metadata + **18 base** + **11 alt** + **4 data** = 33 tokens.
-
-- `OBJECT-COVERAGE.md`'s *"Color (22)"* = 18 base + 4 data. **Correct** — the per-mode contract.
-- `registry/_index.json` → `tokenKeys` = **17**, short by exactly five: `accent-deep`, `data-1..4`.
-- `engine/build-themes.mjs` → `KEYS` hardcodes the same stale 17. **A second copy of one wrong list.**
-
-**Fix: derive the key list from the TSV header row.** Two hand-typed copies is the disease.
+36 columns = 3 metadata + **18 base** + **11 alt** + **4 data** = 33 tokens.
+`OBJECT-COVERAGE.md`'s *"Color (22)"* = 18 + 4 and is **correct** (the per-mode contract).
+`_index.json` → `tokenKeys` = **17**, short by exactly five: `accent-deep`, `data-1..4`.
+`build-themes.mjs` → `KEYS` hardcodes the same stale 17. **Two hand-typed copies of one wrong list.**
+**Fix: derive it from the TSV header row.**
 
 ### D3 — the source README rotted on the object count
 
-It says *"all 20 canonical FileMaker objects"* in four places; the real count is **42** (20→39 on
-07-18, 39→42 on 07-19). ⚠️ **Root cause found 2026-08-04:** the theming decision log's newest entry
-is 2026-07-17 and describes a **two-axis** Color × Feeling system. The 4-vector split and the object
-expansion were **never logged**, so 20 was the last number any record carried. Not ported forward.
+Says *"20 canonical FileMaker objects"* in four places; the real count is **42**. ⚠️ **Root cause:**
+the theming decision log's newest entry is 2026-07-17 and describes a **two-axis** Color × Feeling
+system. The 4-vector split and the 20→39→42 expansion were **never logged**, so 20 was the last
+number any record carried.
 
-### D4 — two colour spaces: RULED, and the risk was OVERSTATED
+### D4 — two colour spaces: RULED hex, and the risk was OVERSTATED
 
-`colors.tsv` is HEX; the 17 per-theme JSONs are OKLCH. **Michael ruled hex canonical, 2026-08-03.**
-
-⚠️ **CORRECTED 2026-08-04.** This file previously called deleting the OKLCH files *"the single
-highest-risk item in the migration."* It is not. The 2026-07-17 log entry declares those files, plus
-`themes.css` and `build-themes.mjs`, **SUPERSEDED** — *"retire in a dedicated cleanup once consumers
-are confirmed off them."* They are retired legacy awaiting a cleanup that never happened, and the
-hex was converted FROM them. They still get **archived, not deleted** (`docs/archive/oklch-source/`)
-because hex→OKLCH does not round-trip — but as caution, not as a rescue.
-
+**Michael ruled hex canonical, 2026-08-03.** ⚠️ **CORRECTED:** this file once called deleting the
+OKLCH JSONs *"the single highest-risk item."* It is not — the 2026-07-17 entry declares them, plus
+`themes.css` and `build-themes.mjs`, **SUPERSEDED**, *"retire in a dedicated cleanup."* Retired
+legacy awaiting a cleanup that never happened, and the hex was converted FROM them. Still
+**archived, not deleted** (hex→OKLCH does not round-trip) — as caution, not rescue.
 **And `resolve.js` line 1 already said `HEX IS CANONICAL`.** The ruling ratifies the engine.
 
 ### D5 — brand + semantics get authored PER MODE (ruled 2026-08-03)
 
-The 11-column alt band re-specifies ground and text only. `accent`, `accent-deep`, `accent-2` and
+The 11-column alt band re-specifies ground and text only; `accent`, `accent-deep`, `accent-2` and
 the four semantics are **shared across modes** — a deliberate 2026-07-17 design (`resolve.js`
-header) that produces measured illegibility. **Michael ruled: same HUE, re-authored lightness per
-mode.** This is a **reversal of a documented decision**, not a gap-fill, and it is recorded that way
-so nobody "restores" the old behaviour on finding the 07-17 text.
+header) that produces measured illegibility. **Ruled: same HUE, re-authored lightness per mode.**
+A **reversal of a documented decision**, recorded as such so nobody "restores" the old behaviour on
+finding the 07-17 text. Cost: **~198 hex values**, Michael's to author. Not machine-derivable —
+auto-darkening by formula is the transform that produced the four-teams-one-red collision.
 
-Cost: **~198 hex values**, Michael's to author in the swatch UI. Not machine-derivable —
-auto-darkening by formula is the silent transform that produced the four-teams-one-red collision.
-
-### D6 — ⭐ NEW, 2026-08-04: the table has NEVER been verified, by its own admission
+### D6 — ⭐ the table has NEVER been verified, by its own admission
 
 > *"the 15 hex values were **CONVERTED from the prior OKLCH tokens BY HAND** and should be
 > spot-checked before any theme is treated as final… The `accent-deep` stops are **first-pass darker
 > values, meant to be eyeballed/tuned per color.**"* — theming decision log, 2026-07-17
 
 Nineteen rows shipped. One was spot-checked. **Every contrast defect found since is a direct
-consequence.** The gate closes this. See `engine/contrast-baseline.md`.
+consequence.** The gate closes this.
 
-### D7 — ⭐ NEW, 2026-08-04: `on-accent/accent` fails on SEVEN themes, live, today
+### D7 — 🔴 `on-accent/accent` fails on SEVEN themes, live, today
 
 The label on an accent fill — the most-clicked text we ship — misses 4.5:1 on `alpine` (2.98),
 `aston-martin` (3.20), `paddock` (3.39), `eos` (3.82), `ferrari` (3.91), `williams` (4.20) and
-`papyrus` (4.48). **No mode toggle involved; each theme's own declared mode.** `paddock` is the
-`f1-racetracks` identity and `eos` is the lighting-tools identity.
+`papyrus` (4.48). **No toggle involved; each theme's own declared mode.** `paddock` is the
+`f1-racetracks` identity and `eos` is the lighting-tools identity. **A larger live defect than the
+entire `alt-*` story** — that needs someone to call `setMode()` (two callers repo-wide); this paints
+every primary button.
 
-**This is a larger live defect than the whole `alt-*` story**, because the alt ramp needs someone to
-call `setMode()` (two callers repo-wide) while this paints every primary button.
+### D8 — 🔴 the 4 data slots fail NATIVELY on every light theme
 
-### D8 — ⭐ NEW, 2026-08-04: the 4 data slots fail NATIVELY on every light theme
+`#4f9fe0 #e07bad #46c48a #e0a84f`, **byte-identical in all 19 rows**, chosen against dark grounds.
+1.7–2.7:1 on light canvases **in that theme's own mode**; `default-theme` worst at **1.13:1**.
+Documented as *"shared across light/dark"* — a design position that measurably fails. **Unruled:**
+per-theme slots, a light/dark data pair, or charts carry their own rules.
 
-`#4f9fe0 #e07bad #46c48a #e0a84f` are **byte-identical in all 19 rows** and were chosen against dark
-grounds. On light themes they measure 1.7–2.7:1 **in that theme's own mode.** `default-theme` is
-worst at **1.13:1**. Documented as *"shared across light/dark"* — a design position that measurably
-fails. **Unruled:** per-theme slots, a light/dark data pair, or charts carry their own rules.
-
-### D9 — ⭐ NEW, 2026-08-04: `default-theme` fails six pairs in its own mode
+### D9 — 🔴 `default-theme` fails six pairs in its own mode
 
 The theme **every new app points at** and the standing `ultimateFallback`. Its 2026-07-16 entry says
 it was tuned FOR higher contrast than the slick dark themes; it measures lower. **Either the intent
-or the values are wrong.** A mid-grey canvas at L≈0.62 has very little room above and below it,
+or the values are wrong.** A zero-chroma canvas at L≈0.62 has very little room above or below it,
 which may be the real finding.
 
 ### D10 — tag-pinning is not achievable over GitHub Pages
@@ -194,14 +210,14 @@ first consumer wires up.**
 
 ## Definition of done
 
-1. The five files above landed byte-verified via a local clone or the web UI.
-2. D6/D7/D9 fixed or waived with reasons; the gate green and flipped to blocking in CI.
-3. `build-themes.mjs` inverted → `vectors/*.tsv` the only authored surface, `dist/` fully generated,
-   `tokenKeys` derived from the header. **Invert it against today's 36-column shape first** and
+1. ~~The last eight files landed byte-verified~~ → `port-remaining.sh`, then confirm the PR.
+2. **Someone opens `studio/index.html` and sees 42/42 objects render.** Ported ≠ proven.
+3. D6/D7/D9 fixed or waived with reasons; gate green and flipped to blocking in CI.
+4. `build-themes.mjs` inverted → `vectors/*.tsv` the only authored surface, `dist/` fully generated,
+   `tokenKeys` derived from the header. **Invert against today's 36-column shape first** and
    byte-match the current `themes.css` as a free regression test.
-4. D1 and D2 gone structurally, not hand-patched.
-5. Studio renders 42/42 objects from this repo's data — the acceptance test, and the gate for `v1.0.0`.
-6. Consumers cut over to a tagged jsDelivr path.
+5. D1 and D2 gone structurally, not hand-patched.
+6. `v1.0.0` tagged; consumers cut over to a tagged jsDelivr path.
 7. Only then: `ClickUp_apps@shared/themes/` → tombstone stub.
 
 **Until every one of those is true, `shared/themes/` remains the source of truth and nothing should
