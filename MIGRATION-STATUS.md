@@ -1,113 +1,208 @@
 # Migration Status
 
-**Source:** `mawizorek/ClickUp_apps` → `shared/themes/` (30 files, ~250KB)
-**Target:** this repo
-**Opened:** 2026-08-03 · **Scaffold PR:** `scaffold-v1`
+**Source:** `mawizorek/ClickUp_apps` → `shared/themes/` · **Target:** this repo
+**Opened:** 2026-08-03 · **Last updated:** 2026-08-04 · **Branch:** `scaffold-v1`
 
-Nothing in `ClickUp_apps` has been deleted or modified. This migration is **copy-then-verify-then-tombstone**, in that order. `shared/themes/` stays authoritative until this repo can prove it renders.
+Nothing in `ClickUp_apps` has been deleted or modified. This migration is
+**copy → verify → tombstone**, in that order. `shared/themes/` stays authoritative until this repo
+can prove it renders.
+
+Decisions live in the [maw-themes (repo) Decision Log](https://app.clickup.com/) in ClickUp, never
+in this repo — a decision log needs a clickable checkbox, so a repo file cannot be one.
 
 ---
 
 ## ✅ Landed, byte-verified
 
-Every file below was written from a blob-API read pinned to source commit `eae28c45`, and **every one came back from GitHub with a blob SHA identical to its source file's SHA.** That is a content-addressed proof of a byte-perfect copy, not an eyeball check.
+Every file below was written from a blob-API read and **came back from GitHub with a blob SHA
+identical to its source file's SHA** — a content-addressed proof of a byte-perfect copy, not an
+eyeball check.
 
-| Landed at | From | Bytes | SHA verified |
-|---|---|---|---|
-| `vectors/colors.tsv` | `colors.tsv` | 5,710 | `4f391aa` ✅ |
-| `vectors/typography.tsv` | `typography.tsv` | 1,148 | `cbf0c9e` ✅ |
-| `vectors/forms.tsv` | `forms.tsv` | 1,322 | `9433b6a` ✅ |
-| `vectors/spacing.tsv` | `spacing.tsv` | 256 | `a355d55` ✅ |
-| `registry/_index.json` | `_index.json` | 7,111 | `f88f54b` ✅ |
-| `registry/_themes.json` | `_themes.json` | 7,002 | `09e429b` ✅ |
-| `registry/_base.json` | `_base.json` | 1,312 | `31c055d` ✅ |
-| `registry/_template.json` | `_template.json` | 2,226 | `03842fc` ✅ |
-| `vocabulary/OBJECT-COVERAGE.md` | `OBJECT-COVERAGE.md` | 10,409 | `30651fe` ✅ |
-| `docs/THEME-SYSTEM.md` | `THEME-SYSTEM.md` | 7,591 | `f99f5fc` ✅ |
-| `engine/build-themes.mjs` | `build-themes.mjs` | 3,652 | `c601bf9` ✅ |
+| Landed at | Bytes | SHA |
+|---|---|---|
+| `vectors/colors.tsv` | 5,710 | `4f391aa` ✅ |
+| `vectors/typography.tsv` | 1,148 | `cbf0c9e` ✅ |
+| `vectors/forms.tsv` | 1,322 | `9433b6a` ✅ |
+| `vectors/spacing.tsv` | 256 | `a355d55` ✅ |
+| `registry/_index.json` | 7,111 | `f88f54b` ✅ |
+| `registry/_themes.json` | 7,002 | `09e429b` ✅ |
+| `registry/_base.json` | 1,312 | `31c055d` ✅ |
+| `registry/_template.json` | 2,226 | `03842fc` ✅ |
+| `vocabulary/OBJECT-COVERAGE.md` | 10,409 | `30651fe` ✅ |
+| `docs/THEME-SYSTEM.md` | 7,591 | `f99f5fc` ✅ |
+| `engine/build-themes.mjs` | 3,652 | `c601bf9` ⛔ ported, DO NOT RUN — see `engine/README.md` |
 
-Plus authored-new: `README.md`, this file, `CHANGELOG.md`, `.nojekyll`, `engine/README.md`, `studio/README.md`.
+## ✅ Authored new (2026-08-04) — the contrast gate
+
+| File | What |
+|---|---|
+| `engine/contrastcheck.py` | WCAG 2.x contrast gate. Maths in the hook. |
+| `engine/contrast-budget.tsv` | Thresholds + waivers as DATA, with a note column so every waiver shows in a diff. |
+| `engine/contrast-baseline.md` | The 2026-08-04 run, stamped. **17 unwaived · 139 waived · 631 comparisons.** |
+
+Shape lifted from the size gate already proven in `maw-agents/uritp-docs`, deliberately rather than
+invented. **It has been RUN, not just written** — against a local copy whose git blob SHA was
+verified identical to `colors.tsv` before the run, so its output describes the real table.
+
+⚠️ **It exits 1 today.** Run it non-blocking in CI until the 17 are cleared or waived with reasons,
+then flip it to blocking. A gate that has always been red is a gate nobody reads.
 
 ---
 
-## ⛔ NOT landed — blocked by the read cap
+## ⛔ NOT landed — and the reason is a TRANSFER PATH, not a decision
 
-The blob API base64-encodes, inflating 4/3 against a ~30KB return cap. **Anything over ~22KB on disk cannot be read back whole.** House rule: *never rewrite a file from a truncated read.* These four were not attempted, rather than half-copied:
+These five need a byte-safe copy this session could not provide. **Reading them is not the problem
+for the bottom three; reproducing them exactly is.** Transcribing a file through an agent's output
+is a fidelity gamble, and the repo's own hard rule — *never rewrite a file from a read you cannot
+prove is whole* — applies to the write side too.
 
-| File | Bytes | Destination | Why blocked |
+| File | Bytes | Destination | Blocker |
 |---|---|---|---|
-| `_objects.json` | 23,415 | `vocabulary/_objects.json` | 23.4KB → ~31KB base64. Over cap. |
-| `preview.data.js` | 27,419 | `studio/studio.data.js` | 27.4KB → ~37KB base64. Well over. |
-| `preview.css` | 26,322 | `studio/studio.css` | 26.3KB → ~35KB base64. Well over. |
-| `decision-log.md` | 21,295 | `docs/decision-log.md` | 21.3KB → ~28KB. Inside the cap but on the edge; not worth risking a silent clip on the one file that holds the reasoning. |
+| `_objects.json` | 23,415 | `vocabulary/_objects.json` | over the ~22KB read ceiling (base64 inflates 4/3 against a ~30KB cap). **The 42-object registry — the vocabulary half of this repo's whole purpose.** |
+| `preview.data.js` | 27,419 | — | over the ceiling, and **should not be ported at all**: it is a 27KB hand-synced mirror of the four grids that the generator deletes. |
+| `preview.css` | 26,322 | `studio/studio.css` | over the ceiling; needs the modular split on arrival regardless. |
+| `resolve.js` | 18,658 | `engine/resolve.js` | **readable, and attempted 2026-08-04. Abandoned at 3,270 of 18,658 bytes and discarded rather than half-committed.** This is the live engine every consumer calls; a subtle transcription slip is a real bug, not a cosmetic diff. |
+| `preview.objects.css` · `preview.core.js` · `preview.html` · `FILEMAKER-CAPABILITIES.md` | 17,231 · 16,260 · 9,848 · 9,981 | `studio/` · `docs/` | not attempted this pass. |
 
-**Transfer path:** GitHub web UI upload, or a local `git clone` + `cp` + push. Both are byte-safe. Do NOT route these through the raw branch URL — it is cache-unreliable and flattens markup, and `_objects.json` + `preview.css` are exactly the files that would corrupt silently.
-
-## 🕐 NOT landed — readable, simply not carried this pass
-
-No blocker. Next scaffold pass picks these up.
-
-| File | Bytes | Destination |
-|---|---|---|
-| `resolve.js` | 18,658 | `engine/resolve.js` |
-| `preview.objects.css` | 17,231 | `studio/studio.objects.css` |
-| `preview.core.js` | 16,260 | `studio/studio.core.js` |
-| `preview.html` | 9,848 | `studio/index.html` |
-| `FILEMAKER-CAPABILITIES.md` | 9,981 | `docs/FILEMAKER-CAPABILITIES.md` |
+**The path that works: a local `git clone` of both repos + `cp` + push, or the GitHub web UI upload.**
+Both are byte-safe. ⚠️ **Do NOT route them through the raw branch URL** — it is cache-unreliable and
+flattens markup, and `_objects.json` + `preview.css` are exactly the files that would corrupt
+silently.
 
 ## 🚫 Deliberately NOT ported
 
-- **`themes.css`** (10,725 B) — GENERATED. It gets regenerated into `dist/`, never copied. Copying a generated artifact is how you get a second source of truth.
-- **`feelings/`** — retired vector. Dead since the 4-vector rework.
+- **`themes.css`** (10,725 B) — GENERATED. Regenerated into `dist/`, never copied. ⚠️ It is also
+  **stale since 2026-07-16 and nothing noticed**, which is the argument for running the generator in
+  CI: a generated artifact regenerated by hand is a hand-maintained artifact.
+- **`decision-log.md`** (21,295 B) — a decision log is a ClickUp doc page, never a repo file
+  (LOCKED 2026-07-26). Its content becomes DL entries; the repo keeps a pointer. ⚠️ Its own header
+  evangelises the opposite convention, so it is an active trap, not merely misfiled.
+- **`_template.json`** — already marked `Status: superseded` in that log. Under hex-canonical a new
+  theme is a ROW.
+- **`README.md`** (8,672 B) — superseded, and carries the object-count rot below.
+- **`feelings/`** — retired vector, dead since the 4-vector rework.
 
 ---
 
-## 🔴 The four findings (all pre-existing; none introduced by this migration)
+## 🎨 The Studio ships INSIDE this repo (ruled 2026-08-03, Michael)
 
-### D1 — two LOCKED themes point at color entities the build cannot see
+`studio/` is a first-class directory here. `OBJECT-COVERAGE.md` defines the Studio as the theme
+acceptance test — *a theme is only real if it can style all 42 canonical objects.* A proof surface
+living in a different repo from the data it proves goes stale the instant either side moves, and
+Pages will happily serve a stale studio against a fresh table with no error anywhere.
 
-`registry/_themes.json` declares `sharp-carbon` (color `carbon`) and `eos` (color `eos`), both **status: locked**. Both color entities exist in `vectors/colors.tsv`. **Neither is registered in `registry/_index.json`, and neither has a per-theme JSON file.** `build-themes.mjs` walks `_index.json`, so neither ever reaches `themes.css` or the Studio menu.
+**It gets the modular split on arrival, not a straight copy.** Two of its five files are over the
+read ceiling today.
 
-Not a menu cosmetic — a broken reference in a locked theme.
+---
 
-### D2 — three surfaces disagree on the color contract
+## Findings
 
-| Surface | Says |
-|---|---|
-| `registry/_index.json` → `tokenKeys` | **17** keys |
-| `engine/build-themes.mjs` → `KEYS` | **17** keys (hardcoded again, second copy) |
-| `vocabulary/OBJECT-COVERAGE.md` | "Color (**22**)" |
-| `vectors/colors.tsv` header | **36** columns |
+### D1 — `carbon` and `eos`: real, but SMALLER than first recorded
 
-`accent-deep` and `data-1..4` are live in the TSV and consumed by real objects, and absent from both 17-key lists. The generator would flag them as `extra keys`. (The handoff said 35 columns; the header is **36** — counted, not assumed.)
+Both are rows in all four vector grids and both are referenced by `status: "locked"` entries in
+`registry/_themes.json` (`sharp-carbon` → `carbon`; `eos` → `eos`). Neither is registered in
+`registry/_index.json` and neither has a per-theme JSON.
+
+⚠️ **DOWNGRADED 2026-08-03:** `resolve.js` reads **only the TSVs**, never a per-colour JSON — so
+both themes **work at runtime today.** D1 is a stale *static* artifact (`themes.css`, the Studio
+menu, the generator), not a broken theme. Corollary: the per-theme JSON files are PROJECTIONS.
+
+### D2 — one stale list, not a three-way disagreement
+
+`colors.tsv` is **36 columns** = 3 metadata + **18 base** + **11 alt** + **4 data** = 33 tokens.
+
+- `OBJECT-COVERAGE.md`'s *"Color (22)"* = 18 base + 4 data. **Correct** — the per-mode contract.
+- `registry/_index.json` → `tokenKeys` = **17**, short by exactly five: `accent-deep`, `data-1..4`.
+- `engine/build-themes.mjs` → `KEYS` hardcodes the same stale 17. **A second copy of one wrong list.**
+
+**Fix: derive the key list from the TSV header row.** Two hand-typed copies is the disease.
 
 ### D3 — the source README rotted on the object count
 
-`shared/themes/README.md` says "all 20 canonical FileMaker objects" in four places. `OBJECT-COVERAGE.md` says **42** (20→39 on 07-18, 39→42 on 07-19). The README never got the pass. **Not ported forward** — this repo's `README.md` is authored fresh and says 42.
+It says *"all 20 canonical FileMaker objects"* in four places; the real count is **42** (20→39 on
+07-18, 39→42 on 07-19). ⚠️ **Root cause found 2026-08-04:** the theming decision log's newest entry
+is 2026-07-17 and describes a **two-axis** Color × Feeling system. The 4-vector split and the object
+expansion were **never logged**, so 20 was the last number any record carried. Not ported forward.
 
-### D4 — the two layers are in DIFFERENT COLOR SPACES ⚠️ read before deleting anything
+### D4 — two colour spaces: RULED, and the risk was OVERSTATED
 
-This one was found while writing this file, and it changes the plan.
+`colors.tsv` is HEX; the 17 per-theme JSONs are OKLCH. **Michael ruled hex canonical, 2026-08-03.**
 
-- **`colors.tsv` is HEX.** `#2a2d33`, `#eef0f3`, every cell.
-- **The per-theme JSON files are OKLCH.** `_base.json` and `_template.json` prove the shape: `oklch(0.20 0.010 260)`. The source README instructs "fill it in… **all 17 tokens in OKLCH**."
+⚠️ **CORRECTED 2026-08-04.** This file previously called deleting the OKLCH files *"the single
+highest-risk item in the migration."* It is not. The 2026-07-17 log entry declares those files, plus
+`themes.css` and `build-themes.mjs`, **SUPERSEDED** — *"retire in a dedicated cleanup once consumers
+are confirmed off them."* They are retired legacy awaiting a cleanup that never happened, and the
+hex was converted FROM them. They still get **archived, not deleted** (`docs/archive/oklch-source/`)
+because hex→OKLCH does not round-trip — but as caution, not as a rescue.
 
-So the TSV layer and the JSON layer are **not the same values in different containers.** They are two different authored datasets in two different color spaces, and the 17 per-theme JSON files (6 at root + 11 in `f1/`) hold OKLCH values **that exist nowhere else.**
+**And `resolve.js` line 1 already said `HEX IS CANONICAL`.** The ruling ratifies the engine.
 
-**Consequences:**
+### D5 — brand + semantics get authored PER MODE (ruled 2026-08-03)
 
-1. **Do not delete `shared/themes/` until those 17 files are preserved.** Tombstoning it now destroys the OKLCH source. This is the single highest-risk item in the migration.
-2. **"Generate the per-theme JSON from the TSV" is not a lossless refactor.** It is a decision to make hex canonical and either drop or machine-convert the OKLCH. Hex→OKLCH round-trips are lossy at the edges and OKLCH is the wider gamut — converting the wrong direction quietly flattens color.
-3. **The open question for Michael:** which space is canonical? He edits the TSV (hex) in a swatch UI and called it the canonical vector space. The docs say author in OKLCH. Both cannot be true, and this is why the two layers drifted apart in the first place — D1 is the symptom, D4 is the disease.
+The 11-column alt band re-specifies ground and text only. `accent`, `accent-deep`, `accent-2` and
+the four semantics are **shared across modes** — a deliberate 2026-07-17 design (`resolve.js`
+header) that produces measured illegibility. **Michael ruled: same HUE, re-authored lightness per
+mode.** This is a **reversal of a documented decision**, not a gap-fill, and it is recorded that way
+so nobody "restores" the old behaviour on finding the 07-17 text.
+
+Cost: **~198 hex values**, Michael's to author in the swatch UI. Not machine-derivable —
+auto-darkening by formula is the silent transform that produced the four-teams-one-red collision.
+
+### D6 — ⭐ NEW, 2026-08-04: the table has NEVER been verified, by its own admission
+
+> *"the 15 hex values were **CONVERTED from the prior OKLCH tokens BY HAND** and should be
+> spot-checked before any theme is treated as final… The `accent-deep` stops are **first-pass darker
+> values, meant to be eyeballed/tuned per color.**"* — theming decision log, 2026-07-17
+
+Nineteen rows shipped. One was spot-checked. **Every contrast defect found since is a direct
+consequence.** The gate closes this. See `engine/contrast-baseline.md`.
+
+### D7 — ⭐ NEW, 2026-08-04: `on-accent/accent` fails on SEVEN themes, live, today
+
+The label on an accent fill — the most-clicked text we ship — misses 4.5:1 on `alpine` (2.98),
+`aston-martin` (3.20), `paddock` (3.39), `eos` (3.82), `ferrari` (3.91), `williams` (4.20) and
+`papyrus` (4.48). **No mode toggle involved; each theme's own declared mode.** `paddock` is the
+`f1-racetracks` identity and `eos` is the lighting-tools identity.
+
+**This is a larger live defect than the whole `alt-*` story**, because the alt ramp needs someone to
+call `setMode()` (two callers repo-wide) while this paints every primary button.
+
+### D8 — ⭐ NEW, 2026-08-04: the 4 data slots fail NATIVELY on every light theme
+
+`#4f9fe0 #e07bad #46c48a #e0a84f` are **byte-identical in all 19 rows** and were chosen against dark
+grounds. On light themes they measure 1.7–2.7:1 **in that theme's own mode.** `default-theme` is
+worst at **1.13:1**. Documented as *"shared across light/dark"* — a design position that measurably
+fails. **Unruled:** per-theme slots, a light/dark data pair, or charts carry their own rules.
+
+### D9 — ⭐ NEW, 2026-08-04: `default-theme` fails six pairs in its own mode
+
+The theme **every new app points at** and the standing `ultimateFallback`. Its 2026-07-16 entry says
+it was tuned FOR higher contrast than the slick dark themes; it measures lower. **Either the intent
+or the values are wrong.** A mid-grey canvas at L≈0.62 has very little room above and below it,
+which may be the real finding.
+
+### D10 — tag-pinning is not achievable over GitHub Pages
+
+The locked rule is *pin by TAG, never by branch.* **Pages serves a branch and cannot serve a tag.**
+jsDelivr serves gh tags:
+`https://cdn.jsdelivr.net/gh/mawizorek/maw-themes@v1.0.0/dist/themes.css`
+Pages stays for the Studio, where always-latest is correct for a proof surface. **Settle before the
+first consumer wires up.**
 
 ---
 
 ## Definition of done
 
-1. All remaining files landed (byte-verified).
-2. D4 ruled on: hex or OKLCH is canonical.
-3. `build-themes.mjs` inverted → `vectors/*.tsv` is the only authored surface, `dist/` fully generated.
+1. The five files above landed byte-verified via a local clone or the web UI.
+2. D6/D7/D9 fixed or waived with reasons; the gate green and flipped to blocking in CI.
+3. `build-themes.mjs` inverted → `vectors/*.tsv` the only authored surface, `dist/` fully generated,
+   `tokenKeys` derived from the header. **Invert it against today's 36-column shape first** and
+   byte-match the current `themes.css` as a free regression test.
 4. D1 and D2 gone structurally, not hand-patched.
-5. Studio renders 42/42 objects against every theme in the registry — **the acceptance test, and the gate for tagging `v1.0.0`.**
+5. Studio renders 42/42 objects from this repo's data — the acceptance test, and the gate for `v1.0.0`.
 6. Consumers cut over to a tagged jsDelivr path.
-7. Only then: `shared/themes/` → tombstone stub.
+7. Only then: `ClickUp_apps@shared/themes/` → tombstone stub.
+
+**Until every one of those is true, `shared/themes/` remains the source of truth and nothing should
+consume this repo.**
