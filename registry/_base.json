@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "note": "Shared structural tokens + the fallback token spine for the GLOBAL contract. Missing keys and stubs resolve here; this itself mirrors maw-dark-utility neutrals with a muted accent. Never referenced directly by an app or render; it is the safety net.",
+  "structure": {
+    "radius": "6px",
+    "radiusLarge": "10px",
+    "space": [4, 8, 12, 16, 24, 32],
+    "typeScaleRatio": 1.25,
+    "fontDisplay": "system-ui, -apple-system, 'Segoe UI', sans-serif",
+    "fontBody": "system-ui, -apple-system, 'Segoe UI', sans-serif",
+    "fontMono": "ui-monospace, 'JetBrains Mono', Menlo, monospace"
+  },
+  "tokens": {
+    "bg": "oklch(0.20 0.010 260)",
+    "surface-1": "oklch(0.245 0.014 260)",
+    "surface-2": "oklch(0.285 0.016 260)",
+    "surface-3": "oklch(0.31 0.018 260)",
+    "border": "oklch(0.44 0.020 260)",
+    "field": "oklch(0.31 0.014 260)",
+    "text": "oklch(0.95 0.008 260)",
+    "text-soft": "oklch(0.72 0.012 260)",
+    "text-faint": "oklch(0.55 0.012 260)",
+    "accent": "oklch(0.72 0.11 205)",
+    "accent-2": "oklch(0.80 0.09 195)",
+    "accent-soft": "oklch(0.30 0.04 205)",
+    "on-accent": "oklch(0.20 0.02 205)",
+    "good": "oklch(0.72 0.15 150)",
+    "warn": "oklch(0.80 0.13 80)",
+    "bad": "oklch(0.62 0.20 25)",
+    "info": "oklch(0.70 0.12 235)"
+  }
+}

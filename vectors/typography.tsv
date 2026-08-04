@@ -1,0 +1,7 @@
+slug	font-display	font-body	font-mono	fs-lead	fs-body	fs-sm	fs-xs	track-tight	track-btn
+sharp-racing	'Chakra Petch', system-ui, sans-serif	'Inter', system-ui, sans-serif	'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace	1rem	0.875rem	0.8rem	0.7rem	-0.01em	0.02em
+mobile-legible	'Manrope', system-ui, sans-serif	'Manrope', system-ui, sans-serif	'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace	1.15rem	1.02rem	0.92rem	0.8rem	-0.015em	0
+grounded	'Inter', system-ui, sans-serif	'Inter', system-ui, sans-serif	'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace	1.05rem	0.94rem	0.85rem	0.75rem	-0.02em	0
+eos	'Chakra Petch', system-ui, sans-serif	'Inter', system-ui, sans-serif	'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace	1rem	0.9rem	0.82rem	0.72rem	-0.01em	0.02em
+racing-archivo	'Archivo', system-ui, sans-serif	'Inter', system-ui, sans-serif	'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace	1rem	0.9rem	0.82rem	0.72rem	-0.02em	0.02em
+papyrus	'Gabarito', system-ui, sans-serif	'Gabarito', system-ui, sans-serif	'IBM Plex Mono', 'SF Mono', monospace	1.05rem	0.94rem	0.82rem	0.72rem	-0.01em	0.04em

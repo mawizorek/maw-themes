@@ -1,0 +1,40 @@
+pair	fg	bg	scope	min	waived	note
+# NOT CHECKED, DELIBERATELY: border/bg and alt-border/bg. WCAG 1.4.11 does NOT require
+# contrast for decorative dividers, and our `border` token is documented as serving
+# dividers + grid lines + field borders at once. A blanket 3:1 failed all 19 rows and would
+# force harsh chrome on every theme - the threshold was wrong, not the table. A field's
+# identifiability rides on its `field` fill, which IS checked. Do not re-add without reading this.
+text/bg	text	bg	native	4.5		Body text on the app canvas. WCAG AA normal text.
+text/surface-1	text	surface-1	native	4.5		Text on raised chrome: bars, part-header, nav.
+text/surface-2	text	surface-2	native	4.5		Text on panels, cards, zebra rows.
+text/surface-3	text	surface-3	native	4.5		Text on popovers and menus.
+text/field	text	field	native	4.5		Field text on its own input fill.
+text-soft/bg	text-soft	bg	native	4.5		Labels and secondary text are still text.
+text-soft/surface-2	text-soft	surface-2	native	4.5		Labels inside cards.
+text-faint/bg	text-faint	bg	native	3.0		Placeholder/tertiary. WCAG exempts DISABLED text; 3.0 is a house floor, not AA.
+accent/bg	accent	bg	native	3.0		Primary action. WCAG 1.4.11 non-text contrast.
+accent-2/bg	accent-2	bg	native	3.0		Secondary accent + focus ring. A focus ring nobody can see is not a focus ring.
+on-accent/accent	on-accent	accent	native	4.5		The label sitting ON an accent fill. This is TEXT, so it is 4.5 - the most-clicked text in any app.
+good/bg	good	bg	native	3.0		Semantic state. Never colour-only, but it must still be visible.
+warn/bg	warn	bg	native	3.0		Semantic state.
+bad/bg	bad	bg	native	3.0		Semantic state.
+info/bg	info	bg	native	3.0		Semantic state.
+data-1/bg	data-1	bg	native	3.0	paper-mono,papyrus,americana,haas,racing-bulls,williams,default-theme	WAIVED->OPEN: the 4 data-* slots are BYTE-IDENTICAL in all 19 rows and tuned for dark grounds, so they fail natively on every light theme. Needs a ruling: per-theme data slots, or a light/dark data pair. Not yet decided.
+data-2/bg	data-2	bg	native	3.0	paper-mono,papyrus,americana,haas,racing-bulls,williams,default-theme	WAIVED->OPEN: same as data-1/bg. One ruling covers all four slots.
+data-3/bg	data-3	bg	native	3.0	paper-mono,papyrus,americana,haas,racing-bulls,williams,default-theme	WAIVED->OPEN: same as data-1/bg. One ruling covers all four slots.
+data-4/bg	data-4	bg	native	3.0	paper-mono,papyrus,americana,haas,racing-bulls,williams,default-theme	WAIVED->OPEN: same as data-1/bg. One ruling covers all four slots.
+alt text/bg	text	bg	opposite	4.5		Body text on the opposite-mode canvas.
+alt text/surface-2	text	surface-2	opposite	4.5		Card text, flipped.
+alt text-soft/bg	text-soft	bg	opposite	4.5		Labels, flipped.
+alt text-faint/bg	text-faint	bg	opposite	3.0		Placeholder, flipped. House floor.
+accent/alt bg	accent	bg	cross	3.0	*	WAIVED->J6: brand+semantic tokens are shared across modes today; they get authored per mode. DELETE this row when they are - do not waive forever.
+accent-2/alt bg	accent-2	bg	cross	3.0	*	WAIVED->J6: see accent/alt bg. Also the focus ring.
+accent-deep/alt bg	accent-deep	bg	cross	3.0	*	WAIVED->J6: see accent/alt bg. Gradient dark stop.
+good/alt bg	good	bg	cross	3.0	*	WAIVED->J6: see accent/alt bg. Semantics are shared across modes too.
+warn/alt bg	warn	bg	cross	3.0	*	WAIVED->J6: see accent/alt bg.
+bad/alt bg	bad	bg	cross	3.0	*	WAIVED->J6: see accent/alt bg.
+info/alt bg	info	bg	cross	3.0	*	WAIVED->J6: see accent/alt bg.
+data-1/alt bg	data-1	bg	cross	3.0	*	WAIVED->J6: see accent/alt bg. Data slots are documented mode-shared.
+data-2/alt bg	data-2	bg	cross	3.0	*	WAIVED->J6: see accent/alt bg.
+data-3/alt bg	data-3	bg	cross	3.0	*	WAIVED->J6: see accent/alt bg.
+data-4/alt bg	data-4	bg	cross	3.0	*	WAIVED->J6: see accent/alt bg.

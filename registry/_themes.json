@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 3,
+  "note": "THE JOIN TABLE. A THEME binds the 4 independent vectors: Color, Typography, Forms, and Spacing. Apps reference a THEME slug via THEMES.applyTheme(slug) and the resolver composes all four. schemaVersion 3 (2026-07-19): confirmed 4-pointer shape end-to-end + added composed utility themes now that resolve.js actually applies every vector.",
+  "vocabulary": {
+    "color": "entity — the palette (hue only). e.g. maw-dark-utility.",
+    "typography": "entity — fonts + size ramp + tracking. e.g. sharp-racing.",
+    "forms": "entity — tactility: radii, border weight, shadows, elevation, motion, gradient angle. sharp | soft | grounded.",
+    "spacing": "entity — density: touch target, padding, gaps. tight | standard | loose | flush | database.",
+    "theme": "JOIN — named combination of exactly one token from each of the four vectors."
+  },
+  "themes": [
+    {
+      "slug": "sharp-mclaren",
+      "name": "Sharp Racing · McLaren",
+      "status": "locked",
+      "color": "mclaren",
+      "typography": "sharp-racing",
+      "forms": "sharp",
+      "spacing": "tight",
+      "intendedUse": "Reference build for F1 apps."
+    },
+    {
+      "slug": "mclaren-mobile",
+      "name": "Mobile Racing · McLaren",
+      "status": "draft",
+      "color": "mclaren",
+      "typography": "mobile-legible",
+      "forms": "soft",
+      "spacing": "loose",
+      "intendedUse": "Padded mobile F1 variant."
+    },
+    {
+      "slug": "grounded-neutral",
+      "name": "Grounded Neutral",
+      "status": "locked",
+      "color": "maw-dark-utility",
+      "typography": "grounded",
+      "forms": "grounded",
+      "spacing": "standard",
+      "intendedUse": "Default non-F1 dashboard — roomy/editorial."
+    },
+    {
+      "slug": "sharp-utility",
+      "name": "Sharp Utility",
+      "status": "locked",
+      "color": "maw-dark-utility",
+      "typography": "sharp-racing",
+      "forms": "sharp",
+      "spacing": "tight",
+      "intendedUse": "Tight instrument/data look — the sleek dashboard direction (Retrocast)."
+    },
+    {
+      "slug": "soft-utility",
+      "name": "Soft Utility",
+      "status": "locked",
+      "color": "maw-dark-utility",
+      "typography": "grounded",
+      "forms": "soft",
+      "spacing": "standard",
+      "intendedUse": "Balanced everyday default for new apps copied from template-app."
+    },
+    {
+      "slug": "soft-mercedes",
+      "name": "Soft Racing · Mercedes",
+      "status": "locked",
+      "color": "mercedes",
+      "typography": "grounded",
+      "forms": "sharp",
+      "spacing": "tight",
+      "intendedUse": "soft-utility's feel with the Mercedes palette — petronas teal accent on a near-black green-tinted ground, silver as the secondary. Built 2026-07-30 for inciardi-collection. A pure COLOR swap: typography/forms/spacing are byte-identical to soft-utility, so anything that reads correctly in one reads correctly in the other."
+    },
+    {
+      "slug": "sharp-carbon",
+      "name": "Sharp Carbon",
+      "status": "locked",
+      "color": "carbon",
+      "typography": "sharp-racing",
+      "forms": "sharp",
+      "spacing": "tight",
+      "intendedUse": "Neutral-cool tight instrument look; alternative to sharp-utility."
+    },
+    {
+      "slug": "database",
+      "name": "Database",
+      "status": "draft",
+      "color": "mercedes",
+      "typography": "sharp-racing",
+      "forms": "sharp",
+      "spacing": "database",
+      "intendedUse": "THE DATABASE LOOK (Michael, 2026-08-03) — maximum row density, gaps collapsed, chrome out of the way. Named for the words he actually uses, so 'give me the database look' resolves in a grep, in this file and in the spacing grid. Deliberately `sharp-utility` with ONE pointer changed (spacing tight -> database) so the two are comparable and any difference is attributable to spacing alone. ⚠️ status DRAFT: composed but never rendered — nothing has consumed it yet, so nobody has looked at it. Promote to locked only after it has been seen. ⚠️ SIBLING, NOT A RIVAL: the `flush` spacing row is the other dense option and it optimises a DIFFERENT axis — flush hugs the viewport EDGE, database maximises ROWS. If nobody can state that difference on sight, retire one rather than letting both drift."
+    },
+    {
+      "slug": "on-track",
+      "name": "On Track · Racing Bulls",
+      "status": "locked",
+      "color": "red-bull",
+      "typography": "racing-archivo",
+      "forms": "soft",
+      "spacing": "standard",
+      "intendedUse": "The On Track motorsport schedule — navy+red Racing Bulls identity, Archivo display headers, rounded soft chrome. Series identity colors ride on top as a local layer (not theme tokens). ⚠️ 2026-08-01: the `red-bull` COLOR row's accent moved from red to the can's yellow (the board rework — four teams were sharing one red). This theme's chrome accent therefore changed with it. If On Track wants the old red it is now `accent-2` on the same row, or it gets its own color entity — do NOT add a local override."
+    },
+    {
+      "slug": "eos",
+      "name": "Eos",
+      "status": "locked",
+      "color": "eos",
+      "typography": "eos",
+      "forms": "eos",
+      "spacing": "eos",
+      "intendedUse": "Lighting/theatrical apps — ETC Eos console grammar (tombstone display: magenta=tracked, blue=intensity-up, green=lower/marked, gold=captured/selected, red=manual). Shared across the LX-notes clone, the Eos Tombstone Teaching Tool, and future lighting tools."
+    },
+    {
+      "slug": "f1-racetracks",
+      "name": "F1 Racetracks",
+      "status": "locked",
+      "color": "paddock",
+      "typography": "sharp-racing",
+      "forms": "sharp",
+      "spacing": "tight",
+      "intendedUse": "THE f1-racetracks app's single point of entry to the theme system (Michael, 2026-08-01). Named for the app on purpose: it is an app identity, not a constructor palette, and no team owns violet. Every pointer reproduces what the app already renders, so adopting it is a swap of a hand-baked layer for one pointer rather than a restyle — `sharp` forms are already copied verbatim into chrome-tokens.css section 7 (J20), `sharp-racing` is already the Chakra Petch / Inter / JetBrains Mono set the brand lockup hardcodes, `tight` matches a dense results board, and `paddock` is the app's own hue-268 ramp. ⚠️ Team colours are NOT in this join and must never be swept into one: a theme applies ONE AT A TIME, the standings matrix renders eleven teams AT ONCE (J14). They stay a local identity layer read from colors.tsv as data."
+    },
+    {
+      "slug": "papyrus",
+      "name": "Papyrus",
+      "status": "locked",
+      "color": "papyrus",
+      "typography": "papyrus",
+      "forms": "papyrus",
+      "spacing": "tight",
+      "intendedUse": "Warm editorial / HML LLC FileMaker renders and natural-light applications. Gabarito display, IBM Plex Mono, zero-radius base, subtle parchment shadows. Spacing uses tight (shared) — FMP density matches."
+    }
+  ]
+}
