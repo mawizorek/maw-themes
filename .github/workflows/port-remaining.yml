@@ -1,0 +1,100 @@
+# ---------------------------------------------------------------------------
+# port-remaining -- MANUAL DISPATCH ONLY.
+#
+# WHY THIS EXISTS
+# ---------------
+# The maw-themes migration has been blocked since 2026-08-04 07:15Z on ONE
+# thing, and it was never a decision. `port-remaining.sh` was written, reviewed
+# and committed -- and then never run, because running it needs a machine with
+# git, python3 and network access at the same time. An agent sandbox has the
+# first two and not the third. This is that machine.
+#
+# WHY IT DOES NOT REIMPLEMENT THE SCRIPT
+# --------------------------------------
+# Because two implementations of one transfer is strictly worse than one, and
+# the script is the artifact that was reasoned about. It clones both repos,
+# copies eight files, proves each one byte-identical with `git hash-object` on
+# BOTH sides, repoints the Studio's asset tags, runs the contrast gate, and
+# REFUSES TO PUSH if a single hash mismatches. None of that is re-expressed
+# here. This file's entire job is to hand it credentials and a runner.
+#
+# HOW THE CREDENTIALS WORK, because it is the one non-obvious line
+# ----------------------------------------------------------------
+# The script does its own `git clone https://github.com/...` into a temp dir
+# and pushes from there, so actions/checkout's credentials do not reach it --
+# they are scoped to the checkout, not to a clone the script makes later.
+# url.<base>.insteadOf rewrites every https://github.com/ URL git sees for the
+# rest of the job to carry the token. The script stays untouched and unaware,
+# which is the point.
+#
+# AFTER IT SUCCEEDS
+# -----------------
+# 1. Review and merge the PR it opens.
+# 2. OPEN studio/index.html AND CONFIRM 42/42 OBJECTS RENDER. Byte-identical is
+#    not the same as working, and this is the acceptance test that gates the
+#    v1.0.0 tag. No workflow can do this step for you.
+# 3. Delete port-remaining.sh AND this workflow. Both are one-time tools, not
+#    infrastructure, and a one-time tool left lying around gets re-run by
+#    somebody who assumes it is idempotent housekeeping. (It is safe to re-run.
+#    That is not the same as being safe to leave.)
+# ---------------------------------------------------------------------------
+name: port-remaining
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type PORT to confirm. Anything else aborts.'
+        required: true
+        default: ''
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  port:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Refuse unless confirmed
+        run: |
+          if [ "${{ github.event.inputs.confirm }}" != "PORT" ]; then
+            echo "::error::Not confirmed. Re-run and type PORT in the input box."
+            exit 1
+          fi
+
+      - name: Check out maw-themes
+        uses: actions/checkout@v4
+
+      - name: Sanity check the script before handing it a token
+        run: |
+          test -f port-remaining.sh || { echo "::error::port-remaining.sh is gone. If the port already ran, delete this workflow instead of restoring it."; exit 1; }
+          bash -n port-remaining.sh
+          echo "syntax ok"
+
+      - name: Hand git the token the script's own clone and push will need
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global url."https://x-access-token:${GH_TOKEN}@github.com/".insteadOf "https://github.com/"
+          git config --global user.name  "MAW Agents"
+          git config --global user.email "mawizorek.online@gmail.com"
+
+      - name: Run the port (copies, hash-verifies, pushes a branch)
+        run: bash port-remaining.sh
+
+      - name: Open the PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BR="port-remaining-$(date +%Y%m%d)"
+          gh pr create --repo "${{ github.repository }}" --head "$BR" --base main --title "migration: port the remaining 8 files (byte-verified)" --body "Opened by the port-remaining workflow. Every file here was proved byte-identical to its source in ClickUp_apps@shared/themes/ with git hash-object on BOTH sides before the commit was made, and the script refuses to push if one hash mismatches -- so this PR existing IS the verification. Known broken on arrival, on purpose: engine/resolve.js resolves the grids as siblings and they now live in vectors/, so it will 404; the path fix is a code decision, not a copy step. THE ACCEPTANCE TEST IS NOT IN THIS PR: open studio/index.html and confirm 42/42 objects render. Ported is not proven." || echo "::warning::gh pr create did not open a PR (it may already exist). Check branch $BR"
+
+      - name: What happens next
+        if: always()
+        run: |
+          echo "------------------------------------------------------------"
+          echo "NEXT: open studio/index.html and confirm 42/42 objects render."
+          echo "That is the acceptance test and it gates the v1.0.0 tag."
+          echo "THEN: delete port-remaining.sh and this workflow."
+          echo "------------------------------------------------------------"

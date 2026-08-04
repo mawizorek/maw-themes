@@ -1,0 +1,87 @@
+# DOCUMENT TOKEN BRIDGE -- what doc-render-engine calls a token, and which
+# canonical role it actually is.
+#
+# WHY THIS FILE EXISTS, AND WHY IT IS DATA
+# ----------------------------------------
+# doc-render-engine/theme/colors.tsv is a nine-token stand-in written in an
+# afternoon to unblock a demo. Its own header says so and puts itself on death
+# row. But it did NOT invent nine new colours -- it invented nine new NAMES for
+# colours this design system already owns, and then a tenth that is genuinely
+# new. Until someone writes that down, the refit looks like a merge of two
+# palettes. It is a rename of nine and an addition of one.
+#
+# Data, not prose, and not code, for the reason contrast-budget.tsv is data: a
+# mapping in a paragraph cannot be diffed, cannot be consumed, and cannot be
+# checked. A row can.
+#
+# THIS FILE IS A WAYPOINT, NOT A HOME. The registry already owns this exact
+# mechanism -- registry/_index.json fmpRoleMap maps the retired FileMaker cv-*
+# layout roles onto the same contract, and resolve.js consumes it as aliasMap.
+# A renderer map is a SECOND INSTANCE of one mechanism, not a second mechanism,
+# so it belongs beside that one. It is not there yet on purpose: tokenKeys in
+# that file is hand-typed and stale by five entries (D2), and the ruled fix is
+# to DERIVE it from the vectors/colors.tsv header row rather than hand-patch
+# it. One pass touches the registry, structurally, not two. Fold this in during
+# THAT pass and retire this file to a stub. If a THIRD consumer map appears
+# before then, stop and promote all of them to a single roleMaps object --
+# three siblings is the sprawl this repo exists to refuse.
+#
+# ---------------------------------------------------------------------------
+# COLUMNS
+#
+# consumer    the renderer's token name, as it appears in its colors.tsv
+# canonical   the role in registry/_index.json tokenRoles
+# status      alias  = a pure rename, no design change, safe today
+#             new    = no canonical equivalent, a design-system decision
+# note        why, and anything the refit must not get wrong
+# ---------------------------------------------------------------------------
+consumer	canonical	status	note
+surface	bg	alias	The page canvas. Straight rename.
+surface-raised	surface-2	alias	Cards, admonition bodies, table zebra. Canonical splits raised chrome into surface-1/2/3 and the renderer only ever needed the middle one. Taking surface-2 rather than surface-1 is deliberate: the renderer has no top bar of its own (Material draws it), so what it calls raised is a panel, not chrome.
+ink	text	alias	Primary body text.
+ink-muted	text-soft	alias	Labels, captions, secondary text.
+rule	border	alias	Dividers, table grid lines, field borders. WARNING: canonical border is documented as serving all three at once, which is exactly why the contrast gate REMOVED its 3:1 pairs rather than failing all 19 themes on a decorative divider. Do not re-add that threshold when this lands.
+accent	accent	alias	Primary action and link colour. base.css maps --md-typeset-a-color to it, so links are ours, not the browser's.
+warn	warn	alias	Warning state. Also the default colour of the confidence marker class.
+danger	bad	alias	Error / destructive.
+ok	good	alias	Success / positive.
+dead		new	NO CANONICAL EQUIVALENT. A reference to a page that has not been written YET. The renderer's own file records why it is not danger: shared with danger it came out the same alarm red as a genuine error, on a list where most items were simply unwritten. It is a real semantic distinction -- NOT-YET-WRITTEN is not FAILED -- and canonical has no slot for it. 19 hex values are needed and they are NOT machine-derivable: D5 forbids auto-darkening by formula, which is the transform that produced the four-teams-one-red collision. Author it in the SAME pass as the per-mode re-authoring already queued, not as a half-filled column bolted onto a shape that is being retired.
+#
+# CANONICAL ROLES THE RENDERER DOES NOT YET CONSUME, AND SHOULD
+# -------------------------------------------------------------
+# These are not gaps in the renderer. They are capacity it gains for free the
+# moment the refit lands, and each one already has a consumer waiting.
+#
+# accent-soft  the terminology marker class ALREADY names it (see
+#              doc-render-engine/theme/marker-classes.tsv). It reports as an
+#              unknown token once per build today and falls back to the body
+#              colour, because the stand-in table has no second accent. This is
+#              the single clearest proof the bridge is worth building: a correct
+#              decision, already made, already written into one cell, that
+#              cannot paint.
+# data-1..4    categorical slots. The TSV data tables have column TYPES now
+#              (id/num/money/text/prose, PR #55) and nothing to colour them
+#              with. WARNING: D8 is live -- all four fail natively on every
+#              light theme. Do not wire these up before D8 is ruled.
+# text-faint   tertiary / disabled / placeholder. The renderer currently reaches
+#              for ink-muted twice at two different weights.
+# on-accent    text sitting on an accent fill. WARNING: D7 is live and larger
+#              than it looks -- this pair misses 4.5:1 on SEVEN themes today.
+# info         informational state. The renderer has no fourth semantic and
+#              currently overloads accent for it.
+# accent-2     secondary accent / focus ring.
+# field        input fill. No consumer in a static renderer today; listed so
+#              nobody records it as missing.
+#
+# COLOUR SPACE. The renderer authors in OKLCH; canonical storage is HEX and
+# that is LOCKED for a real reason, not a preference -- Michael hand-copies hex
+# into FileMaker's colour picker, so hex is the only format that serves the
+# actual workflow. Judging in OKLCH stays correct and is unaffected. The refit
+# converts one way, at build time, and stores nothing back.
+#
+# TABLE SHAPE. The renderer's table is LONG (theme, token, dark, light);
+# canonical is WIDE (one row per theme, 36 columns). Do not port the wide shape
+# into the renderer. Canonical is already moving toward one-row-per-mode with an
+# identity grouping column, which converges on the long shape rather than away
+# from it. The generator emits whatever each consumer needs; neither table is
+# the other's source.
