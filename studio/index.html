@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#8f8f8f">
+<meta name="robots" content="noindex, nofollow">
+<title>Theme Studio</title>
+<meta name="description" content="The 4-vector theme matrix (color x typography x forms x spacing) rendered across the canonical FileMaker object library.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- Studio styles (extracted from the former monolith — modular split 2026-07-17) -->
+<link rel="stylesheet" href="preview.css">
+<!-- Tool/input + feedback object styles (object-set expansion T2, 2026-07-18). Loaded AFTER preview.css. -->
+<link rel="stylesheet" href="preview.objects.css">
+</head>
+<body>
+<a class="skip-link" href="#view">Skip to content</a>
+
+<header class="app-header">
+  <div class="hd-in">
+    <button class="hd-icon hd-burger" id="navBtn" aria-label="View" aria-expanded="false" aria-controls="navDrawer"><span class="hd-bars"></span></button>
+    <a class="hd-brand" href="#"><span class="hd-logo" aria-hidden="true">◆</span><span class="hd-name">Theme Studio<span class="hd-kick">4-Vector Matrix</span></span></a>
+    <span class="hd-theme" id="hdTheme" title="Active theme"><span class="dot" id="hdDot"></span><span class="htxt"><b id="hdThemeName">McLaren</b> · <span id="hdThemeFont">Chakra Petch</span></span></span>
+    <button class="hd-icon hd-gear" id="gearBtn" aria-label="Settings" aria-expanded="false" aria-controls="settingsDrawer">⚙</button>
+  </div>
+</header>
+
+<main id="view" tabindex="-1">
+  <div id="stageRoot" class="studio-shell">
+    <div id="studioWrap">
+      <p class="cov" id="covLine"></p>
+      <div id="studioSections"></div>
+      <section class="sec"><h2>Color swatches — <span id="swName">McLaren</span> <span style="color:var(--ch-faint);font-weight:400;font-size:0.72rem">(tap to copy hex)</span></h2>
+        <div class="sw-grid" id="swGrid"></div></section>
+    </div>
+    <div id="appWrap">
+      <section class="sec"><h2>Full app render</h2><p class="subt">The same theme vectors composed as a layout: masthead, sidebar, stats, filters, table, detail. No studio chrome.</p>
+        <div class="appframe"><div class="appview">
+          <div class="app-top">
+            <div class="app-logo">◆</div>
+            <div><div class="app-title">On Track</div><div class="app-sub">2026 Season · Round 13</div></div>
+            <div class="app-navrow"><span class="tnav on">Standings</span><span class="tnav off">Calendar</span><span class="tnav off">Teams</span></div>
+          </div>
+          <div class="app-body">
+            <aside class="app-side">
+              <div class="side-link on">Constructor standings</div>
+              <div class="side-link">Driver standings</div>
+              <div class="side-link">Race results</div>
+              <div class="side-link">Circuits</div>
+              <div class="side-link">Regulations</div>
+            </aside>
+            <main class="app-main">
+              <div><h1 class="app-h1">Constructor standings</h1><p class="app-lead">Live points after the British Grand Prix. Two rounds until the summer break.</p></div>
+              <div class="app-stats">
+                <div class="ttile"><div class="big">287</div><div class="lab">McLaren points</div></div>
+                <div class="ttile"><div class="big">+46</div><div class="lab">Lead over P2</div></div>
+                <div class="ttile"><div class="big">9</div><div class="lab">Wins this season</div></div>
+              </div>
+              <div class="app-filters"><span class="tpill accent">All teams</span><span class="tnav off">Podiums</span><span class="tnav off">Points finishes</span><div style="flex:1"></div><div class="tfield" style="min-width:180px"><input placeholder="Search teams..."></div></div>
+              <div class="app-two">
+                <div class="tcard" style="padding:0;overflow:hidden">
+                  <table class="ttable">
+                    <thead><tr><th>Pos</th><th>Constructor</th><th class="n">Pts</th></tr></thead>
+                    <tbody>
+                      <tr><td>1</td><td>McLaren</td><td class="n">287</td></tr>
+                      <tr class="alt"><td>2</td><td>Ferrari</td><td class="n">241</td></tr>
+                      <tr class="sel"><td>3</td><td>Red Bull</td><td class="n">228</td></tr>
+                      <tr class="alt"><td>4</td><td>Mercedes</td><td class="n">204</td></tr>
+                      <tr><td>5</td><td>Aston Martin</td><td class="n">96</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:14px">
+                  <div class="tcard"><h3>Next race</h3><p>Hungarian Grand Prix · Hungaroring · Aug 2. Lights out 15:00 CET.</p></div>
+                  <div class="tcallout">McLaren clinches the constructors' title with a P3 or better this weekend.</div>
+                  <div class="app-actions"><button class="tb primary">Add prediction</button><button class="tb secondary">Share</button></div>
+                </div>
+              </div>
+            </main>
+          </div>
+        </div></div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="app-footer">
+  <div class="foot-in">
+    <div class="foot-sources">
+      <a href="https://github.com/mawizorek/ClickUp_apps/blob/main/shared/themes/preview.html">Source ↗</a>
+      <a href="https://github.com/mawizorek/ClickUp_apps/blob/main/shared/themes/_objects.json">Object JSON ↗</a>
+      <a href="https://github.com/mawizorek/ClickUp_apps/blob/main/shared/themes/OBJECT-COVERAGE.md">Object list ↗</a>
+      <a href="https://github.com/mawizorek/ClickUp_apps/commits/main/shared/themes/preview.html">Commits &amp; PRs ↗</a>
+    </div>
+    <div class="foot-stamp" id="footStamp">Theme Studio · shared/themes</div>
+  </div>
+</footer>
+
+<!-- LEFT drawer: View switch -->
+<aside id="navDrawer" class="drawer drawer-left" aria-hidden="true" role="dialog" aria-modal="true" aria-label="View">
+  <div class="drawer-head"><h2>View</h2><button class="drawer-x" id="navX" aria-label="Close view menu">✕</button></div>
+  <nav class="drawer-body nav-list" aria-label="View mode">
+    <button class="nav-link is-active" data-view="studio"><span class="ni" aria-hidden="true">▦</span><span>Studio<span class="nsub">Object spec cards + recipes</span></span></button>
+    <button class="nav-link" data-view="app"><span class="ni" aria-hidden="true">▣</span><span>App Render<span class="nsub">Composed full-app layout</span></span></button>
+  </nav>
+</aside>
+
+<!-- RIGHT drawer: Settings (the matrix) -->
+<aside id="settingsDrawer" class="drawer drawer-right" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Settings">
+  <div class="drawer-head"><h2>Settings</h2><button class="drawer-x" id="setX" aria-label="Close settings">✕</button></div>
+  <div class="drawer-body">
+    <div class="dd" id="ddColor">
+      <label>Color</label>
+      <button class="dd-trigger" id="colorTrigger" aria-haspopup="listbox" aria-expanded="false">
+        <span class="dd-sw" id="colorTrigSw"></span>
+        <span class="dd-meta"><span class="nm" id="colorNm">McLaren</span><span class="sub" id="colorSub">mclaren</span></span>
+        <span class="dd-chev">▼</span>
+      </button>
+      <div class="dd-pop" id="colorPop" role="listbox"></div>
+    </div>
+    <div class="dd" id="ddType">
+      <label>Typography</label>
+      <button class="dd-trigger" id="typeTrigger" aria-haspopup="listbox" aria-expanded="false">
+        <span class="dd-meta"><span class="nm" id="typeNm">Sharp Racing</span><span class="sub" id="typeSub">sharp-racing</span></span>
+        <span class="dd-chev">▼</span>
+      </button>
+      <div class="dd-pop" id="typePop" role="listbox"></div>
+    </div>
+    <div class="dd" id="ddForms">
+      <label>Forms</label>
+      <button class="dd-trigger" id="formsTrigger" aria-haspopup="listbox" aria-expanded="false">
+        <span class="dd-meta"><span class="nm" id="formsNm">Sharp</span><span class="sub" id="formsSub">sharp</span></span>
+        <span class="dd-chev">▼</span>
+      </button>
+      <div class="dd-pop" id="formsPop" role="listbox"></div>
+    </div>
+    <div class="dd" id="ddSpace">
+      <label>Spacing</label>
+      <button class="dd-trigger" id="spaceTrigger" aria-haspopup="listbox" aria-expanded="false">
+        <span class="dd-meta"><span class="nm" id="spaceNm">Tight</span><span class="sub" id="spaceSub">tight</span></span>
+        <span class="dd-chev">▼</span>
+      </button>
+      <div class="dd-pop" id="spacePop" role="listbox"></div>
+    </div>
+    <div class="drawer-hr"></div>
+    <div class="combo"><span class="eq">theme = </span><b id="cTheme">manual-mix</b><br><span id="cFont">Chakra Petch</span><span class="sep">·</span><span id="cGrad">gradient</span></div>
+    <p class="drawer-note">Renders the canonical grids (color × typography × forms × spacing) across the object library in <code>_objects.json</code>. Need a new object? Add it there + to <code>OBJECT-COVERAGE.md</code> and it appears here automatically. Hex is canonical; gradient = two hex stops.</p>
+  </div>
+</aside>
+
+<div class="copied" id="toast">Copied</div>
+
+<!-- Modular split (2026-07-17): data snapshot first, then the render engine. Was one inline <script>. -->
+<script src="preview.data.js"></script>
+<script src="preview.core.js"></script>
+</body>
+</html>
