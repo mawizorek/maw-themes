@@ -124,7 +124,7 @@
       "typography": "eos",
       "forms": "eos",
       "spacing": "eos",
-      "intendedUse": "Lighting/theatrical apps -- ETC Eos console grammar (tombstone display: magenta=tracked, blue=intensity-up, green=lower/marked, gold=captured/selected, red=manual). Shared across the LX-notes clone, the Eos Tombstone Teaching Tool, and future lighting tools. WARNING the `eos` COLOUR ROW currently carries a hand-authored per-token identification harness (Michael, 2026-08-05) -- eighteen deliberately clashing values so every surface names the token painting it. That is a test fixture, not a design. WARNING this slug exists as a join, a colour, a typography, a forms AND a spacing entity; a consumer must resolve a bare name as a JOIN first and report the ambiguity."
+      "intendedUse": "Lighting/theatrical apps -- ETC Eos console grammar. Shared across the LX-notes clone, the Eos Tombstone Teaching Tool, and future lighting tools. THE SEMANTIC TOKENS ARE THE CONSOLE'S OWN GRAMMAR AND ARE NOT FREE TO RE-COLOUR: accent-2 magenta = tracked, info blue = intensity up, good green = lower/marked, warn gold = captured/selected, bad red = manual. A board op reads those five colours faster than they read a label, so changing one to taste breaks a language rather than a palette. The dark row's chrome is the console's blue-tinted charcoal in BLIND (re-authored 2026-08-05 from a photograph of an Element2, replacing a per-token identification harness that had served its purpose); every chrome cell sits within three degrees of hue 217. WARNING this slug exists as a join, a colour, a typography, a forms AND a spacing entity; a consumer must resolve a bare name as a JOIN first and report the ambiguity."
     },
     {
       "slug": "f1-racetracks",
