@@ -14,8 +14,8 @@ carbon-light	light	#f6f7f9	#ffffff	#eef0f4	#e3e6ec	#d3d8e2	#ffffff	#1b1e26	#4a50
 default-dark	dark	#1b1c1e	#212326	#282a2e	#303338	#3d4046	#282a2e	#eceef1	#a8acb3	#787d85	#00e0ff	#00a8c4	#ff9500	#00303a	#001419	#4fbe8b	#d4a24f	#d4655a	#7fa8d4	#4f9fe0	#e07bad	#46c48a	#e0a84f
 default-light	light	#f7f8f9	#ffffff	#eef0f2	#e3e6e9	#ccd1d6	#ffffff	#1e2023	#565b62	#858b93	#7a00cc	#5a0099	#cc0077	#ecd6ff	#ffffff	#1a6b47	#8a5410	#b3271c	#2f6699	#4f9fe0	#e07bad	#46c48a	#e0a84f
 default-theme	mid	#8f8f8f	#a0a0a0	#b0b0b0	#bfbfbf	#565656	#ababab	#1c1c1c	#3f3f3f	#5b5b5b	#353535	#222222	#515151	#cccccc	#f6f6f6	#757575	#656565	#3f3f3f	#5b5b5b	#4f9fe0	#e07bad	#46c48a	#e0a84f
-eos	dark	#0f141c	#172030	#1d2838	#26334a	#41526e	#0b0f16	#dce4ef	#96a4b8	#7a8799	#7aa3d4	#4a7cb0	#b08ade	#1a2b42	#0c1118	#4fb583	#d9a83c	#e06f62	#4fb4e8	#4f9fe0	#e07bad	#46c48a	#e0a84f
-eos-light	light	#f4f3f6	#ffffff	#ecebf0	#e0dfe6	#ccc9d5	#ffffff	#241f2b	#565160	#837e8e	#c400a8	#8f0079	#0059ff	#ffd6f6	#ffffff	#1a6b47	#8a5410	#b3271c	#2a6ba8	#4f9fe0	#e07bad	#46c48a	#e0a84f
+eos	dark	#0f141c	#172030	#1d2838	#26334a	#41526e	#0b0f16	#dce4ef	#96a4b8	#7a8799	#7aa3d4	#4a7cb0	#b08ade	#1a2b42	#0c1118	#4fb583	#f0b429	#e06f62	#4fb4e8	#4f9fe0	#e07bad	#46c48a	#e0a84f
+eos-light	light	#eef2f8	#ffffff	#e2e9f3	#d3dded	#b6c5da	#ffffff	#16202e	#495a72	#5d6e85	#2f5f96	#1f4570	#6b4bab	#dbe6f5	#ffffff	#15704a	#875b00	#b93a2c	#2a6ba8	#4f9fe0	#e07bad	#46c48a	#e0a84f
 ferrari	dark	#2b201e	#241a18	#332724	#3a2d29	#64504a	#3d2f2b	#f6efee	#b9a9a5	#86746f	#d83f38	#a82a24	#ecd44f	#4a2620	#fcecea	#35c48a	#e0bd4a	#d84334	#63bce0	#4f9fe0	#e07bad	#46c48a	#e0a84f
 ferrari-light	light	#faf5f4	#fffdfc	#f2e9e8	#e8dcda	#d8c9c6	#fffdfc	#2b201e	#6b5551	#94807b	#d83f38	#a82a24	#ecd44f	#f7dcda	#fcecea	#35c48a	#e0bd4a	#d84334	#63bce0	#4f9fe0	#e07bad	#46c48a	#e0a84f
 haas	light	#faf7f6	#fefefe	#f2edec	#e6dedc	#d9cdca	#fefefe	#362e2c	#6b5f5c	#948680	#b11745	#85002d	#2f2b2c	#fed6d9	#fefcfc	#2e9268	#a67c2e	#bf4436	#3a7fb5	#4f9fe0	#e07bad	#46c48a	#e0a84f
