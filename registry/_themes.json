@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "note": "THE JOIN TABLE. A THEME binds the 4 independent vectors: Color, Typography, Forms, and Spacing -- and as of schemaVersion 4 it declares TWO colours, a primary and an alt, each by explicit slug. Apps reference a THEME slug and the resolver composes everything. An app that names ONE theme gets both of its colours as its light/dark toggle; an app that names a SECOND theme replaces the alt with that theme's primary colour. The app always owns which slot is which.",
+  "note": "THE JOIN TABLE. A THEME binds the 4 independent vectors: Color, Typography, Forms, and Spacing -- and as of schemaVersion 4 it declares TWO colours, a primary and an alt, each by explicit slug. Apps reference a THEME slug and the resolver composes everything. An app that names ONE theme gets both of its colours as its light/dark toggle; an app that names a SECOND theme replaces the alt with that theme's primary colour. The app always owns which slot is which. CANONICAL: this file is the single authored source for the join table (Michael, 2026-08-05). Every other copy in every other repo is a PROJECTION and must point here; author a theme here and re-copy outward, never the reverse.",
   "vocabulary": {
     "color": "entity -- the PRIMARY palette, by slug, from vectors/colors.tsv.",
     "alt-color": "entity -- the palette the other toggle state uses, by slug. Usually the opposite mode, but NOT required to be: two darks or normal-and-party are equally legal, because nothing infers a relationship.",
@@ -13,7 +13,8 @@
     "pairing": "Pairing lives HERE and ONLY here. vectors/colors.tsv carries no identity column, no alt- band, and no relationship of any kind -- it is a canonical object vector and it is clueless by design (Michael, 2026-08-05). There is no such thing as a theme family.",
     "dangling": "Because the pair is a POINTER it can dangle, which a derived pair could not. A consumer MUST report an unresolvable slug by name and must never fall back silently -- that is the whole price of the expressiveness, paid openly.",
     "mode": "A colour row's `mode` resolves nothing any more. It is descriptive, and it exists so a consumer can warn when a dark palette lands in a light slot. Keep it honest.",
-    "typography-forms-spacing": "These do NOT split by toggle state. Type is scheme-independent by design, and a radius or a cell padding has no business changing when a reader flips a switch. One theme supplies all three."
+    "typography-forms-spacing": "These do NOT split by toggle state. Type is scheme-independent by design, and a radius or a cell padding has no business changing when a reader flips a switch. One theme supplies all three.",
+    "no-customers-no-sites": "NEVER name a customer, a site or a site slug anywhere in this file, prose included. A theme is a LOOK and describing it by its client is wrong on its own terms -- but the enforcement is harder than taste: doc-render-engine's portability leak scan strips comments from .py, .css and .yml before scanning and CANNOT do so for JSON, which has no comment syntax. Every word in this file is a string literal to that scan, so a site name in an intendedUse sentence is indistinguishable from engine code depending on a site, and it FAILS that site's build. One build was lost to exactly that on 2026-08-05. Describe the look."
   },
   "themes": [
     {
@@ -146,7 +147,7 @@
       "typography": "papyrus",
       "forms": "papyrus",
       "spacing": "tight",
-      "intendedUse": "Warm editorial / HML LLC FileMaker renders and natural-light applications. Gabarito display, IBM Plex Mono, zero-radius base, subtle parchment shadows. NOTE this is the one join whose PRIMARY is light and whose alt is dark -- proof the pair carries no assumption about which way round it goes."
+      "intendedUse": "Warm editorial / parchment -- built for FileMaker-style record renders and natural-light applications. Gabarito display, IBM Plex Mono, zero-radius base, subtle parchment shadows. NOTE this is the one join whose PRIMARY is light and whose alt is dark -- proof the pair carries no assumption about which way round it goes. WARNING this sentence used to name the CUSTOMER the theme was built for. It was removed 2026-08-05 because it broke a build: see rules.no-customers-no-sites. Do not put it back."
     }
   ]
 }
