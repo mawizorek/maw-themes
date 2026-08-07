@@ -50,6 +50,32 @@
 # THE SAME AS CANONICAL. The Studio would have WORKED. It would have worked on the
 # wrong table, which is worse, because working is what stops anyone looking.
 #
+# ============================================================================
+# 2026-08-06, RUN 1 - AN ANCHOR CONTAINS ASCII ONLY. THAT IS NOW A RULE.
+# ============================================================================
+# The first real run aborted in the repoint pass, on the LAST anchor in the list.
+# Everything before it matched exactly once against the live files, so the run was
+# not a wasted trip: it VERIFIED every other anchor in production and isolated one.
+#
+# The failing anchor asked for the six characters  \u00b7  where studio.core.js
+# holds a real UTF-8 middot. Python compared backslash-u-0-0-b-7 to a middot and
+# correctly found nothing.
+#
+# ⚑ THE CAUSE IS NOT A TYPO, IT IS A SEAM. That string crossed three escaping
+# layers between being authored and being compared, and one of them consumed an
+# escape. Worse, the INSERTED text a few lines away uses \u00b7 deliberately and
+# correctly, because there the escape is supposed to survive into JavaScript
+# source. Two conventions, both right, in one list, and the difference between
+# them is invisible when you read the file.
+#
+# So the fix is not a corrected character, it is a constraint:
+#
+#     AN ANCHOR IS A NEEDLE, AND A NEEDLE THAT NEEDS ESCAPING CAN BE CHANGED IN
+#     TRANSIT BY SOMETHING THAT IS NOT LOOKING AT IT. ANCHORS ARE ASCII.
+#
+# Every anchor below is plain ASCII and verified unique in its file. The inserted
+# CONTENT is ASCII too, which costs nothing here and removes the class entirely.
+#
 # SAFE TO RE-RUN. Clones into a fresh temp dir, verifies BEFORE committing, and refuses
 # to push if a single hash mismatches. Nothing in ClickUp_apps is modified - it is
 # cloned read-only and never pushed to.
@@ -122,6 +148,13 @@ done
 # The rename breaks the Studio's own <link>/<script> tags. Fix exactly those, anchored to
 # the literal filenames above so nothing else in the file can be caught. Specific patterns
 # run before general ones.
+#
+# ⚠️ THIS PASS DELIBERATELY DOES NOT TOUCH `preview.html`. The four footer links point at
+# the SOURCE repo and are URLs, not asset references; they are repointed in the python
+# pass below along with everything else that names ClickUp_apps. The verification for all
+# of it therefore lives AFTER that pass, not here. It used to live here, where it counted
+# those two footer links, printed "2 (expect 0)" on every single run, and did not fail.
+# A check whose red state is normal is not a check.
 echo
 echo "==> repointing studio asset references (the rename would otherwise 404)"
 sed -i.bak \
@@ -131,16 +164,15 @@ sed -i.bak \
   -e 's|preview\.css|studio.css|g' \
   studio/index.html && rm -f studio/index.html.bak
 
-left=$(grep -c 'preview\.' studio/index.html || true)
-echo "    surviving 'preview.' references in studio/index.html: ${left:-0}  (expect 0)"
-
 # ---------------------------------------------------------------------------
 # THE REPOINT. Runs on the VERIFIED copies, never on the source.
 #
-# Every anchor below is asserted to match EXACTLY ONCE. A miss aborts the whole
-# run before anything is committed, because a half-applied repoint is the worst
-# available outcome: some fetches corrected, some not, and no way to tell from
-# looking at the rendered page.
+# Every anchor is asserted to match EXACTLY ONCE. A miss aborts the whole run
+# before anything is committed, because a half-applied repoint (some fetches
+# corrected, some not) is undetectable from the rendered page.
+#
+# ANCHORS ARE ASCII. See the header. The one non-ASCII anchor in the first
+# version is the only thing that has failed here.
 # ---------------------------------------------------------------------------
 echo
 echo "==> repointing the Studio at the CANONICAL vectors"
@@ -163,7 +195,11 @@ def patch(path, pairs):
 
 
 # ------------------------------------------------------------ studio.core.js
-# The five grid fetches, and the silence around them.
+# The five grid fetches, the silence around them, and the footer stamp.
+#
+# Anchors 1-6 below are UNCHANGED from the first run and each matched exactly
+# once against the live file - the abort happened on the last pair, so the rest
+# are verified in production rather than assumed.
 CORE = [
     (
         "  var base=location.pathname.replace(/[^/]*$/,'');",
@@ -222,22 +258,27 @@ function liveOverride(){""",
     }
   }).catch(function(){});""",
         """      renderAll();
-      liveNote('live \\u00b7 canonical vectors from maw-themes/vectors/');
+      liveNote('LIVE, reading canonical vectors from maw-themes/vectors/');
     } else {
-      liveFault('canonical grids did not load \\u2014 showing the EMBEDDED SNAPSHOT, which is older than vectors/ and must not be trusted');
+      liveFault('canonical grids did not load. Showing the EMBEDDED SNAPSHOT, which is older than vectors/ and must not be trusted.');
     }
   }).catch(function(e){
-    liveFault('canonical grids failed: '+(e&&e.message||'error')+' \\u2014 showing the EMBEDDED SNAPSHOT, which is older than vectors/ and must not be trusted');
+    liveFault('canonical grids failed: '+(e&&e.message||'error')+'. Showing the EMBEDDED SNAPSHOT, which is older than vectors/ and must not be trusted.');
   });""",
     ),
+    # ASCII-ONLY. The first version asked for a literal backslash-u00b7 here and
+    # the file holds a real middot, so it matched nothing and aborted the run.
+    # Stopping short of the middot makes the needle plain ASCII and it is still
+    # unique: this is the only assignment of that string in the file.
     (
-        "document.getElementById('footStamp').textContent='shared/themes \\u00b7 loaded '",
-        "document.getElementById('footStamp').textContent='maw-themes/studio \\u00b7 loaded '",
+        "textContent='shared/themes",
+        "textContent='maw-themes/studio",
     ),
 ]
 
 # --------------------------------------------------------------- index.html
-# The footer still advertises the repo the Studio just left.
+# The footer still advertises the repo the Studio just left. UNVERIFIED until
+# this run: the abort above happened before this list was ever reached.
 HTML = [
     (
         "https://github.com/mawizorek/ClickUp_apps/blob/main/shared/themes/preview.html",
@@ -255,16 +296,19 @@ HTML = [
         "https://github.com/mawizorek/ClickUp_apps/commits/main/shared/themes/preview.html",
         "https://github.com/mawizorek/maw-themes/commits/main/studio/index.html",
     ),
+    # ASCII-only, same rule as above: the foot-stamp div carries a middot, so the
+    # needle starts after it.
     (
-        '<div class="foot-stamp" id="footStamp">Theme Studio \u00b7 shared/themes</div>',
-        '<div class="foot-stamp" id="footStamp">Theme Studio \u00b7 maw-themes/studio</div>',
+        "shared/themes</div>",
+        "maw-themes/studio</div>",
     ),
 ]
 
 # --------------------------------------------------------------- resolve.js
 # Not loaded by the Studio, but it IS the resolver every future consumer calls,
 # and in engine/ its sibling-relative loader is wrong in exactly the same way.
-# Fixed here rather than left as a documented landmine.
+# Fixed here rather than left as a documented landmine. Also UNVERIFIED until
+# this run, for the same reason as HTML above.
 RESOLVE = [
     (
         "  var base=(function(){ var s=document.currentScript&&document.currentScript.src; "
@@ -296,50 +340,19 @@ for name in ("colors.tsv", "typography.tsv", "forms.tsv", "spacing.tsv", "_objec
 print("    verified: no page-relative grid fetch survives")
 PY
 
-cat > studio/PORTED.md <<'NOTE'
-# studio/ - the Theme Studio
-
-Ported from `ClickUp_apps@shared/themes/` byte-identical (`git hash-object` on both
-sides, verified before the commit was made), renamed `preview.html`->`index.html` and
-`preview.*`->`studio.*`, then REPOINTED at this repo's canonical vectors.
-
-## What "repointed" means, and why the copy alone was not enough
-
-`studio.core.js` used to fetch the four grids and `_objects.json` **page-relative** -
-`base = location.pathname` minus the filename. That worked in `shared/themes/` for one
-reason only: the Studio happened to sit in the same folder as the data. Moving it breaks
-that coupling, and **it breaks it silently**, because each fetch is written
-`r.ok ? r.text() : null` - a 404 resolves rather than throwing, so the `if(changed)`
-refresh simply never ran and the trailing `.catch(function(){})` had nothing to catch.
-
-The Studio would have rendered perfectly, off its ~27KB embedded snapshot, with no
-banner and no console error. And that snapshot mirrors the OLD ClickUp_apps tables
-(`colors.tsv` 5,710 B) while this repo's canonical table is 7,777 B.
-
-> **Byte-identical is not the same as canonical.** The acceptance test for the vector
-> space would have been proving a superseded copy of it, from inside the canonical repo,
-> and it would have looked completely fine while doing it.
-
-Now: grids come from `../vectors/`, objects from `../vocabulary/`, and the page states
-which source it is showing in a footer badge - green for canonical, red for snapshot.
-A Studio that cannot tell you which table it just proved is not an acceptance test.
-
-## Still to do
-
-**The acceptance test has not been run.** Open the page and confirm all 42 canonical
-objects render from token roles alone, with no token falling back, and the badge reading
-green. Until that has been SEEN, the Studio is repointed, not proven.
-
-**`studio.data.js` is on borrowed time.** It is a hand-synced snapshot of the four grids,
-and `THEME-SYSTEM.md` instructs updating it by hand whenever a grid changes - a
-mandatory-manual-sync instruction, which is the definition of a surface that will drift.
-It already has. It is now a genuine first-paint fallback rather than the source, and it
-announces itself when it is what you are seeing. **Delete it the moment the generator
-emits `dist/themes.json`.**
-
-**Pages must be enabled on this repo** (Settings -> Pages -> deploy from `main`, root)
-or `/studio/` serves nothing. `.nojekyll` is already committed.
-NOTE
+# ---------------------------------------------------------------------------
+# NOW the reference check can honestly expect zero, because the sed pass handled
+# the asset tags and the python pass handled the four footer URLs. It is a hard
+# failure: the only reason to run a check is to stop a bad tree.
+# ---------------------------------------------------------------------------
+echo
+left=$(grep -c 'preview\.' studio/index.html || true)
+echo "==> surviving 'preview.' references in studio/index.html: ${left:-0}  (expect 0)"
+if [ "${left:-0}" -ne 0 ]; then
+  echo "ABORTED - studio/index.html still names a preview.* file. Nothing pushed."
+  grep -n 'preview\.' studio/index.html || true
+  exit 1
+fi
 
 echo
 echo "==> contrast gate, against the freshly-cloned canonical table"
