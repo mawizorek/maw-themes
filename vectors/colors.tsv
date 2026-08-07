@@ -38,5 +38,5 @@ red-bull	dark	#1e2138	#262a48	#2f3455	#363c60	#565d85	#333858	#eef0f8	#a9adca	#7
 red-bull-light	light	#f5f6fa	#fefeff	#e9ebf3	#dde0eb	#cacfdd	#fefeff	#1e2138	#4d5270	#797f9e	#ecd84e	#bb9c00	#d5493d	#f3edbf	#fceceb		#35c48a	#e0bd4a	#d84334	#6fa5e0	#4f9fe0	#e07bad	#46c48a	#e0a84f
 williams	light	#f6f7fa	#fefeff	#eef0f5	#e2e6ed	#cdd3df	#fefeff	#333c4c	#5f6779	#868ea1	#4a7ac8	#3560a0	#52a0d8	#dce4f5	#fcfdfe		#2e9268	#a67c2e	#bf4436	#4278c2	#4f9fe0	#e07bad	#46c48a	#e0a84f
 williams-dark	dark	#1a1e2a	#212736	#2a3142	#32394c	#47506a	#2a3142	#eef2f8	#aab4c8	#868ea1	#4a7ac8	#3560a0	#52a0d8	#24344c	#fcfdfe		#2e9268	#a67c2e	#bf4436	#4278c2	#4f9fe0	#e07bad	#46c48a	#e0a84f
-uritp	dark	#0f141c	#172030	#1d2838	#26334a	#41526e	#0b0f16	#dce4ef	#96a4b8	#7a8799	#7aa3d4	#4a7cb0	#b08ade	#1a2b42	#0c1118	#c495b5	#4fb583	#f0b429	#e06f62	#4fb4e8	#4f9fe0	#e07bad	#46c48a	#e0a84f
-uritp-light	light	#eef2f8	#ffffff	#e2e9f3	#d3dded	#b6c5da	#ffffff	#16202e	#495a72	#5d6e85	#2f5f96	#1f4570	#6b4bab	#dbe6f5	#ffffff	#8a4374	#15704a	#875b00	#b93a2c	#2a6ba8	#4f9fe0	#e07bad	#46c48a	#e0a84f
+uritp	dark	#000000	#1a1a1a	#1d2838	#26334a	#2e2a35	#000000	#c6bbcd	#96a4b8	#27272b	#b38216	#8b6510	#d042bf	#792770	#ffcc33	#edffff	#86e915	#ffcc33	#bd0000	#0fa2fe	#0fa2fe	#d042bf	#86e915	#ffcc33
+uritp-light	light	#eef2f8	#ffffff	#e2e9f3	#d3dded	#b6c5da	#ffffff	#16202e	#495a72	#27272b	#b38216	#8b6510	#d042bf	#792770	#ffcc33	#16202e	#86e915	#ffcc33	#bd0000	#0fa2fe	#0fa2fe	#d042bf	#86e915	#ffcc33
