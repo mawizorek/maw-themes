@@ -1,6 +1,7 @@
-/* shared/themes/preview.core.js — Theme Studio render engine + shell chrome + live TSV override.
-   Extracted verbatim from the former monolithic preview.html (2026-07-17 modular split).
-   Depends on the globals declared in preview.data.js (COLORS/TYPES/FORMS/SPACES/REGISTRY/GROUPS/
+/* maw-themes/studio/studio.core.js — Theme Studio render engine + shell chrome + live TSV override.
+   Extracted verbatim from the former monolithic preview.html (2026-07-17 modular split), ported
+   out of ClickUp_apps@shared/themes/ and repointed at the canonical vectors (2026-08-06).
+   Depends on the globals declared in studio.data.js (COLORS/TYPES/FORMS/SPACES/REGISTRY/GROUPS/
    ROLES/SW_ORDER/CHROME), which MUST load first. Runs at end of body, so the DOM already exists. */
 
 var root=document.getElementById('stageRoot');
@@ -8,6 +9,44 @@ var curColor="mclaren", curType="sharp-racing", curForm="sharp", curSpace="tight
 
 function applyChrome(mode){ var set=CHROME[mode]||CHROME.light; for(var k in set){ document.documentElement.style.setProperty(k,set[k]); } }
 function r(k,v){return '<div class="r"><span class="rk">'+k+'</span><span class="rv">'+v+'</span></div>';}
+
+/* ---------------------------------------------------------------------------
+   DISPLAY LABELS ARE DERIVED. THEY ARE NOT A COLUMN, AND THAT IS DELIBERATE.
+
+   The canonical vectors/colors.tsv carries 25 columns and `name` is not one of
+   them. Neither is `group`. Both existed in the old ClickUp_apps table, this
+   file read both, and the first time it was pointed at canonical data every
+   row in the picker rendered as `undefined` under a heading of `OTHER` while
+   its swatches painted perfectly from real hex. Nothing was broken; the file
+   was asking for columns that no longer exist.
+
+   ⚠️ GROUPING BY FAMILY IS THE OBVIOUS FIX AND IT IS BANNED IN WRITING. From
+   the repo README: "Pairing lives in the join and nowhere else... there is no
+   theme family, no -light suffix convention, and nothing anywhere infers a
+   partner from a name." Stripping `-light` to sit `eos-light` beside `eos` is
+   precisely inferring a partner from a name, so the picker groups by `mode` --
+   a real column, present on every row, stating a property OF the row rather
+   than a relationship BETWEEN rows.
+
+   `mclaren` therefore reads as "Mclaren", not "McLaren". That is honest: no
+   canonical column claims otherwise, and a casing map here would be a second
+   store of names, which is the defect this whole repo exists to end. If the
+   display name matters, `name` is legal per-row metadata and belongs in the
+   TSV -- a data decision, not a patch to this file.
+--------------------------------------------------------------------------- */
+function label(slug){
+  return String(slug||'').split('-').map(function(w){
+    return w ? w.charAt(0).toUpperCase()+w.slice(1) : w;
+  }).join(' ');
+}
+function modeGroup(mode){
+  if(mode==='dark') return 'Dark';
+  if(mode==='light') return 'Light';
+  if(mode) return label(mode);
+  return 'Unspecified mode';
+}
+function colorName(slug){ var c=COLORS[slug]||{}; return c.name||label(slug); }
+function colorGroup(slug){ var c=COLORS[slug]||{}; return c.group||GROUPS[slug]||modeGroup(c.mode); }
 
 function resolvePropValue(val) {
   var c=COLORS[curColor]||{}, f=FORMS[curForm]||{}, t=TYPES[curType]||{}, s=SPACES[curSpace]||{};
@@ -102,7 +141,7 @@ function applyTokens(){
 function refreshTriggers(){
   var c=COLORS[curColor]||{};
   var f=FORMS[curForm]||{};
-  document.getElementById('colorNm').textContent=c.name||curColor;
+  document.getElementById('colorNm').textContent=colorName(curColor);
   document.getElementById('colorSub').textContent=curColor+(c.mode?' · '+c.mode:'');
   document.getElementById('colorTrigSw').style.background='linear-gradient('+(f['grad-angle']||'135deg')+', '+(c.accent||'#888')+', '+(c['accent-2']||'#555')+')';
 
@@ -119,10 +158,10 @@ function refreshTriggers(){
   document.getElementById('cTheme').textContent='manual-mix';
   document.getElementById('cFont').textContent=fontName;
   document.getElementById('cGrad').textContent=(c.accent||'')+' → '+(c['accent-2']||'')+' @ '+(f['grad-angle']||'');
-  document.getElementById('swName').textContent=c.name||curColor;
+  document.getElementById('swName').textContent=colorName(curColor);
 
   /* live header readout */
-  document.getElementById('hdThemeName').textContent=c.name||curColor;
+  document.getElementById('hdThemeName').textContent=colorName(curColor);
   document.getElementById('hdThemeFont').textContent=fontName;
   document.getElementById('hdDot').style.background='linear-gradient(135deg, '+(c.accent||'#888')+' 50%, '+(c['accent-2']||'#555')+' 50%)';
 }
@@ -177,10 +216,10 @@ function buildPop(id, data, pickFn) {
 }
 
 function buildColorPop(){ var pop=document.getElementById('colorPop'); pop.innerHTML=''; var groups={};
-  Object.keys(COLORS).forEach(function(s){ var g=(COLORS[s].group)||GROUPS[s]||'Other'; (groups[g]=groups[g]||[]).push(s); });
-  Object.keys(groups).forEach(function(g){ var gl=document.createElement('div'); gl.className='dd-grouplabel'; gl.textContent=g; pop.appendChild(gl);
+  Object.keys(COLORS).forEach(function(s){ var g=colorGroup(s); (groups[g]=groups[g]||[]).push(s); });
+  Object.keys(groups).forEach(function(g){ var gl=document.createElement('div'); gl.className='dd-grouplabel'; gl.textContent=g+' ('+groups[g].length+')'; pop.appendChild(gl);
     groups[g].forEach(function(slug){ var c=COLORS[slug]; var o=document.createElement('button'); o.className='dd-opt'; o.setAttribute('data-slug',slug); o.setAttribute('role','option');
-      o.innerHTML='<span class="osw" style="background:linear-gradient(135deg, '+c.accent+' 50%, '+c['accent-2']+' 50%)"></span><span class="onm">'+c.name+'</span><span class="otag">'+(c.mode||'')+'</span>';
+      o.innerHTML='<span class="osw" style="background:linear-gradient(135deg, '+(c.accent||'#888')+' 50%, '+(c['accent-2']||'#555')+' 50%)"></span><span class="onm">'+colorName(slug)+'</span><span class="otag">'+(c.mode||'')+'</span>';
       o.onclick=function(){ pickColor(slug); }; pop.appendChild(o); }); }); }
 
 function ddToggle(which){ var t=document.getElementById(which+'Trigger'),p=document.getElementById(which+'Pop'); var isOpen=p.classList.contains('open'); ddCloseAll(); if(!isOpen){ t.classList.add('open'); t.setAttribute('aria-expanded','true'); p.classList.add('open'); } }
@@ -299,7 +338,7 @@ function liveOverride(){
     fetch(OBJECTS+'_objects.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null;})
   ]).then(function(res){
     var changed=false;
-    if(res[0]){ var cr=parseTSV(res[0]); if(cr&&Object.keys(cr).length){ var nc={}; Object.keys(cr).forEach(function(s){ var row=cr[s]; row.group=GROUPS[s]||'Other'; nc[s]=row; }); COLORS=nc; changed=true; } }
+    if(res[0]){ var cr=parseTSV(res[0]); if(cr&&Object.keys(cr).length){ var nc={}; Object.keys(cr).forEach(function(s){ var row=cr[s]; row.group=GROUPS[s]||''; nc[s]=row; }); COLORS=nc; changed=true; } }
     if(res[1]){ var tr=parseTSV(res[1]); if(tr&&Object.keys(tr).length){ TYPES=tr; changed=true; } }
     if(res[2]){ var fr=parseTSV(res[2]); if(fr&&Object.keys(fr).length){ FORMS=fr; changed=true; } }
     if(res[3]){ var sr=parseTSV(res[3]); if(sr&&Object.keys(sr).length){ SPACES=sr; changed=true; } }
@@ -313,7 +352,7 @@ function liveOverride(){
 
       buildColorPop(); buildPop('typePop', TYPES, pickType); buildPop('formsPop', FORMS, pickForm); buildPop('spacePop', SPACES, pickSpace);
       renderAll();
-      liveNote('LIVE, reading canonical vectors from maw-themes/vectors/');
+      liveNote('LIVE, reading canonical vectors from maw-themes/vectors/ \u00b7 '+Object.keys(COLORS).length+' colours');
     } else {
       liveFault('canonical grids did not load. Showing the EMBEDDED SNAPSHOT, which is older than vectors/ and must not be trusted.');
     }
