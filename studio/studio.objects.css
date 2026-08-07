@@ -1,0 +1,183 @@
+/* shared/themes/preview.objects.css — TOOL / INPUT + FEEDBACK + VIEWER object styles (object-set expansion T2+T3, 2026-07-18).
+   Split out of preview.css to stay under the 30KB read cap. Linked from preview.html AFTER preview.css.
+   Every rule is theme-driven: it consumes the same tokens the canonical objects use
+   (--surface-*, --accent, --accent-2, --field, --border, --text*, --good/warn/bad/info, --data-*),
+   the forms vector (--radius, --radius-pill, --border-w, --elev-1/2/3, --motion-*, --ease, --lift),
+   and --font-mono. No hard-coded colors, no color math (color-mix on tokens only). All hover/transition
+   motion respects the global prefers-reduced-motion guard already declared in preview.css. Class prefix
+   `o` = object, chosen to avoid collision with the existing `.t*` canonical-object classes. */
+
+/* ---- Dropzone (file intake — report-normalizer / prism open on one) ---- */
+.odrop{width:100%;text-align:center;border:1.5px dashed var(--border);border-radius:var(--radius-lg);background:var(--surface-1);padding:calc(var(--pad-card,20px) + 8px) var(--pad-card,20px);transition:border-color var(--motion-fast,150ms) var(--ease,ease),background var(--motion-fast,150ms) var(--ease,ease);}
+.odrop:hover{border-color:var(--accent);background:var(--surface-2);}
+.odrop .oico{width:44px;height:44px;margin:0 auto 12px;border-radius:12px;background:var(--surface-3);display:grid;place-items:center;font-size:1.3rem;color:var(--text-soft);}
+.odrop h4{font-family:var(--font-display);font-size:var(--fs-lead);color:var(--text);margin:0 0 4px;}
+.odrop p{font-size:var(--fs-sm);color:var(--text-soft);margin:0 0 12px;}
+.odrop .oexts{display:inline-flex;gap:6px;}
+.odrop .oext{font-family:var(--font-mono);font-size:var(--fs-xs);font-weight:600;padding:3px 9px;border-radius:6px;border:var(--border-w) solid var(--border);color:var(--text-soft);}
+
+/* ---- Stepper / progress rail (Upload -> Map -> Preview -> Export) ---- */
+.ostep-rail{display:flex;gap:8px;flex-wrap:wrap;width:100%;}
+.ostep{flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;min-height:38px;padding:7px 14px;border:var(--border-w) solid var(--border);background:var(--surface-2);color:var(--text-faint);border-radius:var(--radius-pill);font-size:var(--fs-sm);font-weight:600;transition:color var(--motion-fast,150ms) var(--ease,ease),border-color var(--motion-fast,150ms) var(--ease,ease),background var(--motion-fast,150ms) var(--ease,ease);}
+.ostep .on{font-family:var(--font-mono);font-size:var(--fs-xs);width:18px;height:18px;border-radius:50%;display:grid;place-items:center;background:var(--surface-3);color:var(--text-faint);}
+.ostep.done{color:var(--text-soft);border-color:var(--good);}
+.ostep.done .on{background:var(--good);color:var(--on-accent);}
+.ostep.active{color:var(--text);border-color:var(--accent);background:var(--accent-soft);}
+.ostep.active .on{background:var(--accent);color:var(--on-accent);}
+
+/* ---- Mapping row (source -> ops -> target : the mapper primitive) ---- */
+.omap{display:flex;align-items:center;gap:10px;flex-wrap:wrap;width:100%;padding:11px 12px;background:var(--surface-2);border:var(--border-w) solid var(--border);border-radius:var(--radius);}
+.omap .osrc{font-family:var(--font-mono);font-size:var(--fs-sm);color:var(--text);flex:1 1 150px;word-break:break-word;}
+.omap .oarrow{color:var(--text-faint);}
+.omap .oops{display:flex;gap:5px;flex-wrap:wrap;}
+.omap .otgt{flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;background:var(--field);color:var(--text);border:var(--border-w) solid var(--border);border-radius:var(--radius);padding:6px 11px;font-size:var(--fs-sm);}
+.omap .otgt span{color:var(--text-faint);}
+
+/* ---- Chip toggle (little on/off operation pills) ---- */
+.ochip{font-size:var(--fs-xs);font-weight:600;padding:4px 10px;border-radius:var(--radius-pill);border:var(--border-w) solid var(--border);background:var(--surface-2);color:var(--text-faint);cursor:pointer;transition:color var(--motion-fast,150ms) var(--ease,ease),border-color var(--motion-fast,150ms) var(--ease,ease),background var(--motion-fast,150ms) var(--ease,ease);}
+.ochip.on{color:var(--text);border-color:var(--accent);background:var(--accent-soft);}
+
+/* ---- Toggle switch (iOS-style) ---- */
+.oswitch{position:relative;width:38px;height:22px;border-radius:var(--radius-pill);background:var(--surface-3);border:var(--border-w) solid var(--border);cursor:pointer;transition:background var(--motion-med,240ms) var(--ease,ease),border-color var(--motion-med,240ms) var(--ease,ease);flex:none;display:inline-block;}
+.oswitch::after{content:"";position:absolute;top:1px;left:1px;width:16px;height:16px;border-radius:50%;background:var(--text-faint);transition:transform var(--motion-med,240ms) var(--ease,ease),background var(--motion-med,240ms) var(--ease,ease);}
+.oswitch.on{background:var(--accent-soft);border-color:var(--accent);}
+.oswitch.on::after{transform:translateX(16px);background:var(--accent);}
+.oswitch-row{display:inline-flex;align-items:center;gap:10px;font-size:var(--fs-sm);color:var(--text-soft);}
+
+/* ---- Segmented control (real object, not just nav_mode) ---- */
+.oseg{display:inline-flex;border:var(--border-w) solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--surface-2);}
+.oseg button{font-family:var(--font-body);font-size:var(--fs-sm);font-weight:600;padding:7px 15px;background:transparent;border:0;border-right:var(--border-w) solid var(--border);color:var(--text-soft);cursor:pointer;transition:background var(--motion-fast,150ms) var(--ease,ease),color var(--motion-fast,150ms) var(--ease,ease);}
+.oseg button:last-child{border-right:0;}
+.oseg button.on{background:var(--accent);color:var(--on-accent);}
+.oseg button:not(.on):hover{background:var(--surface-3);color:var(--text);}
+
+/* ---- Icon button ---- */
+.oiconbtn{width:38px;height:38px;display:inline-grid;place-items:center;border:var(--border-w) solid var(--border);background:var(--surface-2);color:var(--text-soft);border-radius:var(--radius);font-size:1.05rem;cursor:pointer;transition:border-color var(--motion-fast,150ms) var(--ease,ease),color var(--motion-fast,150ms) var(--ease,ease),background var(--motion-fast,150ms) var(--ease,ease);}
+.oiconbtn:hover{border-color:var(--accent);color:var(--text);background:var(--surface-3);}
+
+/* ---- Inline banner / alert (validation feedback) ---- */
+.obanner{width:100%;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--radius);font-size:var(--fs-sm);line-height:1.45;border:var(--border-w) solid var(--border);background:var(--surface-2);color:var(--text);}
+.obanner .ob-ic{flex:none;font-size:1rem;}
+.obanner.match{border-color:var(--good);background:color-mix(in srgb, var(--good) 12%, transparent);}
+.obanner.match .ob-ic{color:var(--good);}
+.obanner.warn{border-color:var(--warn);background:color-mix(in srgb, var(--warn) 12%, transparent);}
+.obanner.warn .ob-ic{color:var(--warn);}
+.obanner.bad{border-color:var(--bad);background:color-mix(in srgb, var(--bad) 12%, transparent);}
+.obanner.bad .ob-ic{color:var(--bad);}
+
+/* ---- Flag / callout list-item (prism warnings sidebar) ---- */
+.oflag{display:flex;gap:10px;padding:11px 12px;border-radius:var(--radius);border:var(--border-w) solid var(--border);background:var(--surface-2);font-size:var(--fs-sm);line-height:1.45;}
+.oflag+.oflag{margin-top:8px;}
+.oflag .of-ic{flex:none;font-size:1rem;margin-top:1px;color:var(--text-faint);}
+.oflag.warn{border-color:var(--warn);}
+.oflag.warn .of-ic{color:var(--warn);}
+.oflag.ok .of-ic{color:var(--good);}
+.oflag b{color:var(--text);font-weight:650;}
+.oflag .of-x{color:var(--text-soft);}
+
+/* ---- KV stat panel (key left, mono value right — the record-detail primitive) ---- */
+.okv{width:100%;border:var(--border-w) solid var(--border);border-radius:var(--radius-lg);background:var(--surface-1);overflow:hidden;box-shadow:var(--elev-1,var(--shadow-out));}
+.okv .okv-h{padding:10px 14px;border-bottom:var(--border-w) solid var(--border);font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:0.08em;text-transform:uppercase;color:var(--text-faint);}
+.okv .okv-row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:9px 14px;border-bottom:var(--border-w) solid var(--border);}
+.okv .okv-row:last-child{border-bottom:0;}
+.okv .okv-k{font-size:var(--fs-sm);color:var(--text-soft);}
+.okv .okv-v{font-family:var(--font-mono);font-size:var(--fs-sm);font-weight:600;color:var(--text);font-variant-numeric:tabular-nums;text-align:right;}
+
+/* ---- Typed data-table (column name + type sublabel, sticky header, row-num gutter) ---- */
+.otblwrap{width:100%;border:var(--border-w) solid var(--border);border-radius:var(--radius);overflow:auto;}
+.otbl{width:100%;border-collapse:collapse;font-size:var(--fs-sm);}
+.otbl thead th{position:sticky;top:0;background:var(--surface-2);text-align:left;padding:9px 12px;font-weight:650;color:var(--text);white-space:nowrap;border-bottom:var(--border-w) solid var(--border);border-right:var(--border-w) solid var(--border);}
+.otbl thead th .oty{display:block;font-family:var(--font-mono);font-size:var(--fs-xs);font-weight:500;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.04em;margin-top:2px;}
+.otbl tbody td{padding:7px 12px;border-bottom:var(--border-w) solid var(--border);border-right:var(--border-w) solid var(--border);font-family:var(--font-mono);font-size:var(--fs-xs);color:var(--text-soft);font-variant-numeric:tabular-nums;white-space:nowrap;}
+.otbl tbody tr:hover td{background:var(--surface-2);}
+.otbl .orownum{color:var(--text-faint);text-align:right;user-select:none;}
+.otbl td .onum{color:var(--data-1);}
+.otbl td .obool{color:var(--data-2);}
+.otbl td .onull{color:var(--text-faint);font-style:italic;}
+
+/* ---- Toast (transient confirmation) ---- */
+.otoast{display:inline-flex;align-items:center;gap:9px;background:var(--surface-3);border:var(--border-w) solid var(--border);color:var(--text);padding:9px 16px;border-radius:var(--radius-pill);font-size:var(--fs-sm);font-weight:600;box-shadow:var(--elev-2,var(--shadow-out));}
+.otoast .ot-ic{color:var(--good);}
+
+/* ---- Empty / error / loading state ---- */
+.oempty{width:100%;text-align:center;padding:calc(var(--pad-card,20px) + 6px) var(--pad-card,20px);color:var(--text-soft);}
+.oempty .oe-ic{width:40px;height:40px;margin:0 auto 10px;border-radius:12px;background:var(--surface-2);display:grid;place-items:center;font-size:1.2rem;color:var(--text-faint);}
+.oempty h4{font-family:var(--font-display);font-size:var(--fs-lead);color:var(--text);margin:0 0 4px;}
+.oempty p{font-size:var(--fs-sm);color:var(--text-soft);margin:0;}
+.oempty.err .oe-ic{color:var(--bad);}
+
+/* ---- Side drawer (static preview: the panel body, shell owns the slide) ---- */
+.odrawer{width:100%;max-width:320px;border:var(--border-w) solid var(--border);border-radius:var(--radius-lg);background:var(--surface-1);overflow:hidden;box-shadow:var(--elev-3,var(--shadow-out));}
+.odrawer .od-h{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:var(--border-w) solid var(--border);}
+.odrawer .od-h h4{font-family:var(--font-display);font-size:var(--fs-lead);color:var(--text);margin:0;}
+.odrawer .od-b{padding:6px 14px 12px;}
+.odrawer .od-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:var(--border-w) solid var(--border);font-size:var(--fs-sm);color:var(--text-soft);}
+.odrawer .od-row:last-child{border-bottom:0;}
+
+/* ================= VIEWER OBJECTS (T3, 2026-07-18) ================= */
+
+/* ---- Meter / progress bar (the rating meter racetracks uses; also any % / score) ---- */
+.ometer{width:100%;display:flex;align-items:center;gap:12px;}
+.ometer .om-score{font-family:var(--font-mono);font-size:1.5rem;font-weight:700;font-variant-numeric:tabular-nums;color:var(--text);line-height:1;flex:none;}
+.ometer .om-score small{font-size:var(--fs-xs);color:var(--text-faint);font-weight:500;}
+.ometer .om-track{flex:1;height:8px;border-radius:var(--radius-pill);background:var(--surface-3);overflow:hidden;}
+.ometer .om-fill{display:block;height:100%;border-radius:var(--radius-pill);background:var(--accent-grad);}
+.ometer .om-word{flex:none;font-size:var(--fs-sm);font-weight:600;color:var(--accent);}
+.ometer.stack{flex-direction:column;align-items:stretch;gap:6px;}
+.ometer.stack .om-top{display:flex;justify-content:space-between;align-items:baseline;font-size:var(--fs-sm);color:var(--text-soft);}
+.ometer.stack .om-top b{font-family:var(--font-mono);color:var(--text);font-variant-numeric:tabular-nums;}
+
+/* ---- Pager (prev / next drill-through) ---- */
+.opager{display:flex;justify-content:space-between;gap:12px;width:100%;}
+.opager .opn{flex:1;background:var(--surface-2);border:var(--border-w) solid var(--border);border-radius:var(--radius);padding:11px 15px;cursor:pointer;color:inherit;text-align:left;transition:background var(--motion-fast,150ms) var(--ease,ease),border-color var(--motion-fast,150ms) var(--ease,ease);}
+.opager .opn:hover{background:var(--surface-3);border-color:var(--accent);}
+.opager .opn.next{text-align:right;}
+.opager .opn .opn-l{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:0.08em;text-transform:uppercase;color:var(--text-faint);}
+.opager .opn .opn-n{font-weight:600;color:var(--text);margin-top:3px;}
+.opager .opn:disabled{opacity:.4;cursor:default;}
+
+/* ---- Breadcrumb ---- */
+.ocrumb{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:0.04em;color:var(--text-faint);}
+.ocrumb a{color:var(--text-soft);text-decoration:none;cursor:pointer;transition:color var(--motion-fast,150ms) var(--ease,ease);}
+.ocrumb a:hover{color:var(--accent);}
+.ocrumb .ocb-sep{opacity:.5;}
+.ocrumb .ocb-cur{color:var(--text);}
+
+/* ---- Legend (data-viz key: swatch + label rows) ---- */
+.olegend{display:flex;flex-wrap:wrap;gap:8px 18px;width:100%;}
+.olegend .oleg{display:inline-flex;align-items:center;gap:8px;font-size:var(--fs-sm);color:var(--text-soft);}
+.olegend .oleg .osw{width:14px;height:14px;border-radius:4px;flex:none;}
+.olegend .oleg .osw.s1{background:var(--data-1);}
+.olegend .oleg .osw.s2{background:var(--data-2);}
+.olegend .oleg .osw.s3{background:var(--data-3);}
+.olegend .oleg .osw.s4{background:var(--data-4);}
+.olegend .oleg .oln{width:16px;height:0;border-top:2px solid var(--accent);flex:none;}
+
+/* ================= RETROCAST OBJECTS (T4, 2026-07-19) =================
+   Added for retrocast (forecast-vs-history viewer). Theme-driven like the rest.
+   Redundant encoding on the hero: sign + WORD + side rail, never color alone. */
+
+/* ---- Departure hero (stat_hero_departure): oversized signed metric + descriptor + baseline ---- */
+.ohero{width:100%;text-align:center;padding:calc(var(--pad-card,20px) + 10px) var(--pad-card,20px);border:var(--border-w) solid var(--border);border-radius:var(--radius-lg);background:var(--surface-2);box-shadow:var(--elev-1,var(--shadow-out));}
+.ohero .oh-metric{display:flex;align-items:baseline;justify-content:center;gap:4px;}
+.ohero .oh-num{font-family:var(--font-display);font-size:clamp(3rem,14vw,5rem);font-weight:900;letter-spacing:-0.04em;line-height:1;color:var(--text);font-variant-numeric:tabular-nums;}
+.ohero .oh-unit{font-size:clamp(1.2rem,5vw,1.7rem);font-weight:700;color:var(--text-soft);}
+.ohero .oh-word{font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-top:10px;color:var(--text-soft);}
+.ohero .oh-sub{font-size:var(--fs-xs);color:var(--text-faint);margin-top:6px;}
+.ohero[data-dir="up"]{border-left:4px solid var(--warn);}
+.ohero[data-dir="up"] .oh-word{color:var(--warn);}
+.ohero[data-dir="down"]{border-left:4px solid var(--info);}
+.ohero[data-dir="down"] .oh-word{color:var(--info);}
+
+/* ---- Range band strip (viz_range_band): historical min-max with normal tick + today marker ---- */
+.oband{position:relative;height:14px;width:100%;margin-bottom:6px;}
+.oband-track{position:absolute;inset:0;top:5px;height:4px;border-radius:var(--radius-pill);background:var(--surface-3);border:var(--border-w) solid var(--border);}
+.oband-normal{position:absolute;top:0;transform:translateX(-50%);width:2px;height:14px;background:var(--text-faint);}
+.oband-today{position:absolute;top:0;transform:translateX(-50%);width:14px;height:14px;border-radius:50%;background:var(--accent);border:2px solid var(--bg);box-shadow:0 0 0 1px var(--accent);}
+.oband-scale{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:var(--fs-xs);color:var(--text-faint);font-variant-numeric:tabular-nums;}
+
+/* ---- Horizontal card ribbon (card_ribbon): scroll-snap row of compact cards ---- */
+.orib{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;width:100%;}
+.orib-card{flex:0 0 220px;scroll-snap-align:start;background:var(--surface-2);border:var(--border-w) solid var(--border);border-top:3px solid var(--accent-2);border-radius:var(--radius-lg);padding:14px;}
+.orib-y{font-family:var(--font-mono);font-weight:700;color:var(--accent);font-size:var(--fs-sm);margin:0 0 8px;}
+.orib-b{font-size:var(--fs-sm);line-height:1.45;color:var(--text);margin:0;}
