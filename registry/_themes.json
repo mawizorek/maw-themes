@@ -29,6 +29,17 @@
       "intendedUse": "Reference build for F1 apps."
     },
     {
+      "slug": "uritp",
+      "name": "URITP",
+      "status": "draft",
+      "color": "URITP",
+      "alt-color": "mclaren-light",
+      "typography": "sharp-racing",
+      "forms": "sharp",
+      "spacing": "database",
+      "intendedUse": "URITP doc renders."
+    },
+    {
       "slug": "mclaren-mobile",
       "name": "Mobile Racing \u00b7 McLaren",
       "status": "draft",
