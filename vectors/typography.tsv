@@ -5,4 +5,4 @@ grounded	'Inter', system-ui, sans-serif	'Inter', system-ui, sans-serif	'JetBrain
 eos	'Archivo', system-ui, sans-serif	'Inter', system-ui, sans-serif	'IBM Plex Mono', 'SF Mono', monospace	1rem	0.9rem	0.82rem	0.72rem	-0.01em	0.02em
 racing-archivo	'Archivo', system-ui, sans-serif	'Inter', system-ui, sans-serif	'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace	1rem	0.9rem	0.82rem	0.72rem	-0.02em	0.02em
 papyrus	'Gabarito', system-ui, sans-serif	'Gabarito', system-ui, sans-serif	'IBM Plex Mono', 'SF Mono', monospace	1.05rem	0.94rem	0.82rem	0.72rem	-0.01em	0.04em
-uritp-safety	'Gabarito', system-ui, sans-serif	'Gabarito', system-ui, sans-serif	'IBM Plex Mono', 'SF Mono', monospace	1.05rem	0.94rem	0.82rem	0.72rem	-0.01em	0.04em
+uritp-safety	'Archivo', system-ui, sans-serif	'Gabarito', system-ui, sans-serif	'IBM Plex Mono', 'SF Mono', monospace	1.05rem	0.94rem	0.82rem	0.72rem	-0.01em	0.04em
