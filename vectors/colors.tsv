@@ -30,8 +30,8 @@ paddock	dark	#0b0d13	#12151b	#191c23	#22252d	#2b2e35	#1c1f27	#edeef3	#a8abb2	#71
 paddock-light	light	#f5f7fa	#fdfdff	#ebedf1	#dddfe5	#cccfd7	#fdfdff	#181a21	#555860	#7d8088	#f14442	#b71920	#907bf8	#e6e5ff	#fffbfa	#c4110e	#49ca81	#e7b643	#e6424c	#4baeed	#4f9fe0	#e07bad	#46c48a	#e0a84f
 paper-mono	light	#fafafa	#fefefe	#f1f1f1	#e6e6e6	#cfcfcf	#fefefe	#292929	#636363	#8f8f8f	#333333	#1f1f1f	#676767	#e9e9e9	#fdfdfd	#303030	#2e9268	#a67c2e	#bf4436	#3a7fb5	#4f9fe0	#e07bad	#46c48a	#e0a84f
 paper-mono-dark	dark	#1a1a1a	#202020	#2a2a2a	#333333	#4a4a4a	#2a2a2a	#f2f2f2	#b0b0b0	#808080	#333333	#1f1f1f	#676767	#3a3a3a	#fdfdfd	#9c9c9c	#2e9268	#a67c2e	#bf4436	#3a7fb5	#4f9fe0	#e07bad	#46c48a	#e0a84f
-papyrus	light	#f0e6d2	#f7efe0	#e4d5bd	#d8c5a8	#c0a982	#f9f2e4	#4a3826	#75604a	#9a8468	#97663a	#6f4a28	#a56048	#e4d3b3	#faf4e6	#6e4b2a	#2f8f5f	#a67d33	#b0503a	#3d7098	#4f9fe0	#e07bad	#46c48a	#e0a84f
-papyrus-dark	dark	#241c14	#2c2218	#362a1e	#40331f	#574632	#2c2218	#f0e6d2	#baa688	#8a7860	#97663a	#6f4a28	#a56048	#40331d	#faf4e6	#c59468	#2f8f5f	#a67d33	#b0503a	#3d7098	#4f9fe0	#e07bad	#46c48a	#e0a84f
+papyrus	light	#f0e6d2	#f7efe0	#e4d5bd	#d8c5a8	#c0a982	#f9f2e4	#4a3826	#75604a	#9a8468	#97663a	#6f4a28	#a56048	#e4d3b3	#faf4e6	#7b2d8e	#2f8f5f	#a67d33	#b0503a	#3d7098	#4f9fe0	#e07bad	#46c48a	#e0a84f
+papyrus-dark	dark	#241c14	#2c2218	#362a1e	#40331f	#574632	#2c2218	#f0e6d2	#baa688	#8a7860	#97663a	#6f4a28	#a56048	#40331d	#faf4e6	#d38ce8	#2f8f5f	#a67d33	#b0503a	#3d7098	#4f9fe0	#e07bad	#46c48a	#e0a84f
 racing-bulls	light	#f6f7fa	#fefeff	#eef0f4	#e2e5ec	#cdd2dc	#fefeff	#333a4a	#5f6678	#868da0	#4a52b0	#363c8c	#d1483f	#dfe0f5	#fcfcfe	#4850ac	#2e9268	#a67c2e	#bf4436	#3f6fb5	#4f9fe0	#e07bad	#46c48a	#e0a84f
 racing-bulls-dark	dark	#1a1c2a	#212436	#2a2d42	#32354c	#474d6a	#2a2d42	#eef0f8	#aab0c8	#868da0	#4a52b0	#363c8c	#d1483f	#2a2d5c	#fcfcfe	#979cd3	#2e9268	#a67c2e	#bf4436	#3f6fb5	#4f9fe0	#e07bad	#46c48a	#e0a84f
 red-bull	dark	#1e2138	#262a48	#2f3455	#363c60	#565d85	#333858	#eef0f8	#a9adca	#797f9e	#ecd84e	#bb9c00	#d5493d	#362d07	#1c1600	#ecd953	#35c48a	#e0bd4a	#d84334	#6fa5e0	#4f9fe0	#e07bad	#46c48a	#e0a84f
