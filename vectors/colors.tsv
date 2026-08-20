@@ -40,3 +40,5 @@ williams	light	#f6f7fa	#fefeff	#eef0f5	#e2e6ed	#cdd3df	#fefeff	#333c4c	#5f6779	#
 williams-dark	dark	#1a1e2a	#212736	#2a3142	#32394c	#47506a	#2a3142	#eef2f8	#aab4c8	#868ea1	#4a7ac8	#3560a0	#52a0d8	#24344c	#fcfdfe	#85a5da	#2e9268	#a67c2e	#bf4436	#4278c2	#4f9fe0	#e07bad	#46c48a	#e0a84f
 uritp	dark	#000000	#1a1a1a	#1d2838	#26334a	#2e2a35	#000000	#c6bbcd	#96a4b8	#27272b	#b38216	#8b6510	#d042bf	#792770	#ffcc33	#edffff	#86e915	#ffcc33	#bd0000	#0fa2fe	#0fa2fe	#d042bf	#86e915	#ffcc33
 uritp-light	light	#eef2f8	#ffffff	#e2e9f3	#d3dded	#b6c5da	#ffffff	#16202e	#495a72	#27272b	#b38216	#8b6510	#d042bf	#792770	#ffcc33	#16202e	#86e915	#ffcc33	#bd0000	#0fa2fe	#0fa2fe	#d042bf	#86e915	#ffcc33
+uritp-safety	light	#f0e6d2	#f7efe0	#e4d5bd	#d8c5a8	#c0a982	#f9f2e4	#4a3826	#75604a	#9a8468	#97663a	#6f4a28	#a56048	#e4d3b3	#faf4e6		#2f8f5f	#a67d33	#b0503a	#3d7098	#4f9fe0	#e07bad	#46c48a	#e0a84f
+uritp-safety-dark	dark	#241c14	#2c2218	#362a1e	#40331f	#574632	#2c2218	#f0e6d2	#baa688	#8a7860	#97663a	#6f4a28	#a56048	#40331d	#faf4e6		#2f8f5f	#a67d33	#b0503a	#3d7098	#4f9fe0	#e07bad	#46c48a	#e0a84f

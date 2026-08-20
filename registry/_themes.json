@@ -40,6 +40,17 @@
       "intendedUse": "URITP doc renders."
     },
     {
+      "slug": "uritp-safety",
+      "name": "URITP-Safety",
+      "status": "draft",
+      "color": "uritp-safety",
+      "alt-color": "uritp-safety-dark",
+      "typography": "uritp-safety",
+      "forms": "uritp-safety",
+      "spacing": "uritp-safety",
+      "intendedUse": "URITP Safety doc renders."
+    },
+    {
       "slug": "mclaren-mobile",
       "name": "Mobile Racing \u00b7 McLaren",
       "status": "draft",
