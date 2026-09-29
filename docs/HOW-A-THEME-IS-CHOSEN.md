@@ -88,12 +88,21 @@ every theme pointing at it, on purpose.
 
 ---
 
-## Scoped, not built
+## Page-level themes -- BUILT in doc-render-engine, 2026-09-28
 
-**Page-level themes.** A markdown page carrying `theme:` in its frontmatter
-should resolve against this same registry and apply all four vectors over that
-page. Needs scoped custom properties on a page wrapper rather than `:root`, so it
-is real work rather than a config line.
+A markdown page carrying `theme:` in its frontmatter resolves against this same
+registry, with the same grammar as rules 1-3 (one theme, or `{dark, light}`),
+and gets all four vectors over that page. Engine side:
+`doc-render-engine/docrender/pagetheme.py`, whose docstring is the mechanism.
+
+⚠️ **An unknown name leaves the page on the SITE theme and is reported by page
+and name** -- never fallen back to `base`, per rule 4's last bullet. `paper` is
+not a theme (`paper-mono` is); that exact typo is the case that proved it.
+
+🚫 **Folder-level inheritance is NOT built.** A folder index's `theme:` does not
+cascade to its pages yet.
+
+## Scoped, not built
 
 **Single-vector replacement.** Michael floated `theme::color: <slug>` for
 overriding one vector without restating a whole theme. **The syntax is unruled**
