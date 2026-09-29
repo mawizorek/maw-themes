@@ -170,6 +170,72 @@
       "forms": "papyrus",
       "spacing": "tight",
       "intendedUse": "Warm editorial / parchment -- built for FileMaker-style record renders and natural-light applications. Gabarito display, IBM Plex Mono, zero-radius base, subtle parchment shadows. NOTE this is the one join whose PRIMARY is light and whose alt is dark -- proof the pair carries no assumption about which way round it goes. WARNING this sentence used to name the CUSTOMER the theme was built for. It was removed 2026-08-05 because it broke a build: see rules.no-customers-no-sites. Do not put it back."
+    },
+    {
+      "slug": "dept-scenic",
+      "name": "Department \u00b7 Scenic",
+      "status": "draft",
+      "color": "dept-scenic-dark",
+      "alt-color": "dept-scenic-light",
+      "typography": "sharp-racing",
+      "forms": "sharp",
+      "spacing": "database",
+      "intendedUse": "Production-department page look: orange accent on the black-ground stage palette, gold accent-2. One of six dept-* siblings sharing typography/forms/spacing; they differ only in accent columns, measured together in oklch 2026-09-28. Change a shared pointer on all six or none. Draft until seen rendered."
+    },
+    {
+      "slug": "dept-sm",
+      "name": "Department \u00b7 SM",
+      "status": "draft",
+      "color": "dept-sm-dark",
+      "alt-color": "dept-sm-light",
+      "typography": "sharp-racing",
+      "forms": "sharp",
+      "spacing": "database",
+      "intendedUse": "Production-department page look: phoenix crimson (deliberately near `bad`, deeper than it) accent on the black-ground stage palette, gold accent-2. One of six dept-* siblings sharing typography/forms/spacing; they differ only in accent columns, measured together in oklch 2026-09-28. Change a shared pointer on all six or none. Draft until seen rendered."
+    },
+    {
+      "slug": "dept-audio",
+      "name": "Department \u00b7 Audio",
+      "status": "draft",
+      "color": "dept-audio-dark",
+      "alt-color": "dept-audio-light",
+      "typography": "sharp-racing",
+      "forms": "sharp",
+      "spacing": "database",
+      "intendedUse": "Production-department page look: green accent on the black-ground stage palette, gold accent-2. One of six dept-* siblings sharing typography/forms/spacing; they differ only in accent columns, measured together in oklch 2026-09-28. Change a shared pointer on all six or none. Draft until seen rendered."
+    },
+    {
+      "slug": "dept-video",
+      "name": "Department \u00b7 Video",
+      "status": "draft",
+      "color": "dept-video-dark",
+      "alt-color": "dept-video-light",
+      "typography": "sharp-racing",
+      "forms": "sharp",
+      "spacing": "database",
+      "intendedUse": "Production-department page look: violet accent on the black-ground stage palette, gold accent-2. One of six dept-* siblings sharing typography/forms/spacing; they differ only in accent columns, measured together in oklch 2026-09-28. Change a shared pointer on all six or none. Draft until seen rendered."
+    },
+    {
+      "slug": "dept-admin",
+      "name": "Department \u00b7 Admin",
+      "status": "draft",
+      "color": "dept-admin-dark",
+      "alt-color": "dept-admin-light",
+      "typography": "sharp-racing",
+      "forms": "sharp",
+      "spacing": "database",
+      "intendedUse": "Production-department page look: warm brown-grey (scenic hue family, split by chroma) accent on the black-ground stage palette, gold accent-2. One of six dept-* siblings sharing typography/forms/spacing; they differ only in accent columns, measured together in oklch 2026-09-28. Change a shared pointer on all six or none. Draft until seen rendered."
+    },
+    {
+      "slug": "dept-lx",
+      "name": "Department \u00b7 LX",
+      "status": "draft",
+      "color": "dept-lx-dark",
+      "alt-color": "dept-lx-light",
+      "typography": "sharp-racing",
+      "forms": "sharp",
+      "spacing": "database",
+      "intendedUse": "Production-department page look: lemon (greener than `warn`; light row deepens to olive for contrast) accent on the black-ground stage palette, gold accent-2. One of six dept-* siblings sharing typography/forms/spacing; they differ only in accent columns, measured together in oklch 2026-09-28. Change a shared pointer on all six or none. Draft until seen rendered."
     }
   ]
 }
