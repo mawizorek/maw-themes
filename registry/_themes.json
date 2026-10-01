@@ -180,7 +180,7 @@
       "typography": "sharp-racing",
       "forms": "sharp",
       "spacing": "database",
-      "intendedUse": "Production-department page look: orange accent on the black-ground stage palette, gold accent-2. One of six dept-* siblings sharing typography/forms/spacing; they differ only in accent columns, measured together in oklch 2026-09-28. Change a shared pointer on all six or none. Draft until seen rendered."
+      "intendedUse": "Production-department page look: orange accent on a dark ground tinted toward that accent, gold accent-2. One of six dept-* siblings sharing typography/forms/spacing. The dark rows share ONE lightness+chroma ladder (the database/mercedes recipe) re-hued to each accent, re-authored off pure black 2026-10-01; accents measured together in oklch 2026-09-28. Change a shared pointer or a ladder step on all six or none. Draft until seen rendered."
     },
     {
       "slug": "dept-sm",
@@ -191,7 +191,7 @@
       "typography": "sharp-racing",
       "forms": "sharp",
       "spacing": "database",
-      "intendedUse": "Production-department page look: phoenix crimson (deliberately near `bad`, deeper than it) accent on the black-ground stage palette, gold accent-2. One of six dept-* siblings sharing typography/forms/spacing; they differ only in accent columns, measured together in oklch 2026-09-28. Change a shared pointer on all six or none. Draft until seen rendered."
+      "intendedUse": "Production-department page look: phoenix crimson (deliberately near `bad`, deeper than it) accent on a dark ground tinted toward that accent, gold accent-2. One of six dept-* siblings sharing typography/forms/spacing. The dark rows share ONE lightness+chroma ladder (the database/mercedes recipe) re-hued to each accent, re-authored off pure black 2026-10-01; accents measured together in oklch 2026-09-28. Change a shared pointer or a ladder step on all six or none. Draft until seen rendered."
     },
     {
       "slug": "dept-audio",
@@ -202,7 +202,7 @@
       "typography": "sharp-racing",
       "forms": "sharp",
       "spacing": "database",
-      "intendedUse": "Production-department page look: green accent on the black-ground stage palette, gold accent-2. One of six dept-* siblings sharing typography/forms/spacing; they differ only in accent columns, measured together in oklch 2026-09-28. Change a shared pointer on all six or none. Draft until seen rendered."
+      "intendedUse": "Production-department page look: green accent on a dark ground tinted toward that accent, gold accent-2. One of six dept-* siblings sharing typography/forms/spacing. The dark rows share ONE lightness+chroma ladder (the database/mercedes recipe) re-hued to each accent, re-authored off pure black 2026-10-01; accents measured together in oklch 2026-09-28. Change a shared pointer or a ladder step on all six or none. Draft until seen rendered."
     },
     {
       "slug": "dept-video",
@@ -213,7 +213,7 @@
       "typography": "sharp-racing",
       "forms": "sharp",
       "spacing": "database",
-      "intendedUse": "Production-department page look: violet accent on the black-ground stage palette, gold accent-2. One of six dept-* siblings sharing typography/forms/spacing; they differ only in accent columns, measured together in oklch 2026-09-28. Change a shared pointer on all six or none. Draft until seen rendered."
+      "intendedUse": "Production-department page look: violet accent on a dark ground tinted toward that accent, gold accent-2. One of six dept-* siblings sharing typography/forms/spacing. The dark rows share ONE lightness+chroma ladder (the database/mercedes recipe) re-hued to each accent, re-authored off pure black 2026-10-01; accents measured together in oklch 2026-09-28. Change a shared pointer or a ladder step on all six or none. Draft until seen rendered."
     },
     {
       "slug": "dept-admin",
@@ -224,7 +224,7 @@
       "typography": "sharp-racing",
       "forms": "sharp",
       "spacing": "database",
-      "intendedUse": "Production-department page look: warm brown-grey (scenic hue family, split by chroma) accent on the black-ground stage palette, gold accent-2. One of six dept-* siblings sharing typography/forms/spacing; they differ only in accent columns, measured together in oklch 2026-09-28. Change a shared pointer on all six or none. Draft until seen rendered."
+      "intendedUse": "Production-department page look: warm brown-grey (scenic hue family, split by chroma) accent on a dark ground tinted toward that accent, gold accent-2. One of six dept-* siblings sharing typography/forms/spacing. The dark rows share ONE lightness+chroma ladder (the database/mercedes recipe) re-hued to each accent, re-authored off pure black 2026-10-01; accents measured together in oklch 2026-09-28. Change a shared pointer or a ladder step on all six or none. WARNING the admin and scenic grounds land within 5 degrees of hue and read as near-identical; only the accent separates them. Draft until seen rendered."
     },
     {
       "slug": "dept-lx",
@@ -235,7 +235,7 @@
       "typography": "sharp-racing",
       "forms": "sharp",
       "spacing": "database",
-      "intendedUse": "Production-department page look: lemon (greener than `warn`; light row deepens to olive for contrast) accent on the black-ground stage palette, gold accent-2. One of six dept-* siblings sharing typography/forms/spacing; they differ only in accent columns, measured together in oklch 2026-09-28. Change a shared pointer on all six or none. Draft until seen rendered."
+      "intendedUse": "Production-department page look: lemon (greener than `warn`; light row deepens to olive for contrast) accent on a dark ground tinted toward that accent, gold accent-2. One of six dept-* siblings sharing typography/forms/spacing. The dark rows share ONE lightness+chroma ladder (the database/mercedes recipe) re-hued to each accent, re-authored off pure black 2026-10-01; this row alone runs the ladder at 0.7 chroma so the yellow-green tint does not go olive. Accents measured together in oklch 2026-09-28. Change a shared pointer or a ladder step on all six or none. Draft until seen rendered."
     }
   ]
 }
