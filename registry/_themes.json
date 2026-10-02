@@ -191,7 +191,7 @@
       "typography": "sharp-racing",
       "forms": "sharp",
       "spacing": "database",
-      "intendedUse": "Production-department page look: phoenix crimson (deliberately near `bad`, deeper than it) accent on a dark ground tinted toward that accent, gold accent-2. One of six dept-* siblings sharing typography/forms/spacing. The dark rows share ONE lightness+chroma ladder (the database/mercedes recipe) re-hued to each accent, re-authored off pure black 2026-10-01; accents measured together in oklch 2026-09-28. Change a shared pointer or a ladder step on all six or none. Draft until seen rendered."
+      "intendedUse": "Production-department page look: phoenix crimson (deliberately near `bad`, deeper than it) accent on a dark ground tinted toward that accent, gold accent-2. One of six dept-* siblings sharing typography/forms/spacing. The dark rows share ONE lightness+chroma ladder (the database/mercedes recipe) re-hued to each accent, re-authored off pure black 2026-10-01; this row runs the ladder at 0.5 chroma (2026-10-02: a full-strength crimson tint read harsh). Accents measured together in oklch 2026-09-28. Change a shared pointer or a ladder step on all six or none. Draft until seen rendered."
     },
     {
       "slug": "dept-audio",
@@ -224,7 +224,7 @@
       "typography": "sharp-racing",
       "forms": "sharp",
       "spacing": "database",
-      "intendedUse": "Production-department page look: warm brown-grey (scenic hue family, split by chroma) accent on a dark ground tinted toward that accent, gold accent-2. One of six dept-* siblings sharing typography/forms/spacing. The dark rows share ONE lightness+chroma ladder (the database/mercedes recipe) re-hued to each accent, re-authored off pure black 2026-10-01; accents measured together in oklch 2026-09-28. Change a shared pointer or a ladder step on all six or none. WARNING the admin and scenic grounds land within 5 degrees of hue and read as near-identical; only the accent separates them. Draft until seen rendered."
+      "intendedUse": "Production-department page look: warm brown-grey (scenic hue family, split by chroma) accent on a dark ground tinted toward that accent, gold accent-2. One of six dept-* siblings sharing typography/forms/spacing. The dark rows share ONE lightness+chroma ladder (the database/mercedes recipe) re-hued to each accent, re-authored off pure black 2026-10-01; accents measured together in oklch 2026-09-28. Change a shared pointer or a ladder step on all six or none. This row runs the ladder at 0.5 chroma (2026-10-02: the warm tint read harsh), which also splits it from scenic, whose hue sits within 5 degrees. Draft until seen rendered."
     },
     {
       "slug": "dept-lx",
